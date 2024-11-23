@@ -3,80 +3,15 @@
 #variables
 CUR_DIR = $(shell pwd)
 LIBFT_PATH = $(CUR_DIR)/libft
-NAME = minishell
+NAME = philosophers
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -Iinclude -Isrcs -Ireadline
 RLFLAG = -lreadline -lncurses -ltinfo
 
 #sources
 #VPATH = sources:include
-#INCLUDES = minishell.h
+#INCLUDES = philosophers.h
 SRCS =	main.c \
-		01_pre_prompt/pre_prompt.c \
-		error/error_and_exit.c \
-		02_sig/signals.c \
-		02_sig/signals_reset.c \
-		03_pars/parsing_1.c \
-		03_pars/parsing_2.c \
-		03_pars/incomplete_input.c \
-		04_lex/ft_split_ms.c \
-		04_lex/ft_split_specials.c \
-		04_lex/lexer_cleaner.c \
-		04_lex/lexer_op_check.c \
-		04_lex/lexer_str_utils.c \
-		05_tokenizer/tokenizer.c \
-		05_tokenizer/tokenizer_utils.c \
-		05_tokenizer/tokenizer_strings.c \
-		05_tokenizer/tokenizer_operators.c \
-		05_tokenizer/tokenizer_qwords.c \
-		06_syntax/syntax.c \
-		06_syntax/syntaxerrors.c \
-		07_expand/expander.c \
-		07_expand/expander_quotes.c \
-		07_expand/expander_env.c \
-		07_expand/expander_env_yes.c \
-		07_expand/expander_env_no.c \
-		07_expand/expander_exit.c \
-		07_expand/expander_utils.c \
-		07_expand/expander_q.c \
-		07_expand/llist_to_string.c \
-		08_cmd_creat/command_list.c \
-		08_cmd_creat/initiate_comm_infos.c \
-		08_cmd_creat/handle_redirections.c \
-		08_cmd_creat/file_creator.c \
-		08_cmd_creat/heredoc.c \
-		08_cmd_creat/create_argv_of_cmds.c \
-		08_cmd_creat/command_utils.c \
-		08_cmd_creat/check_def_env_paths.c \
-		09_builtin/builtin_check.c \
-		09_builtin/builtin_exit.c \
-		09_builtin/exit.c \
-		09_builtin/echo.c \
-		09_builtin/env.c \
-		09_builtin/pwd.c \
-		09_builtin/cd.c \
-		09_builtin/cd_error.c \
-		09_builtin/export_1.c \
-		09_builtin/export_2.c \
-		09_builtin/export_3.c \
-		09_builtin/export_sort.c \
-		09_builtin/unset.c \
-		09_builtin/help.c \
-		10_exec/command_reader_01.c \
-		10_exec/command_reader_02.c \
-		10_exec/command_reader_print_err_01.c \
-		10_exec/command_reader_print_err_02.c \
-		10_exec/exe_binary.c \
-		10_exec/exe_built-ins.c \
-		10_exec/exe_binary_child_0.c \
-		10_exec/exe_binary_child_1.c \
-		10_exec/exe_child_fd_setup_cleanup.c \
-		10_exec/minishell_executer.c \
-		10_exec/exe_error_handling.c \
-		10_exec/exe_utils.c \
-		utils_strings/utils_string.c \
-		utils_binary_path/binary_path.c \
-		free/free.c
 
 #test_and_debug/test_and_debug.c
 #test_and_debug/testprints.c
