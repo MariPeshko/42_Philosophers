@@ -5,13 +5,13 @@ CUR_DIR = $(shell pwd)
 LIBFT_PATH = $(CUR_DIR)/libft
 NAME = philosophers
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -Iinclude -Isrcs -Ireadline
+CFLAGS = -Wall -Wextra -Werror -g -Iinclude -Isrcs -pthread -Ireadline
 RLFLAG = -lreadline -lncurses -ltinfo
 
 #sources
 #VPATH = sources:include
 #INCLUDES = philosophers.h
-SRCS =	main.c \
+SRCS =	main.c
 
 #test_and_debug/test_and_debug.c
 #test_and_debug/testprints.c

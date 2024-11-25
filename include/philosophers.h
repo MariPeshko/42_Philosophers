@@ -14,9 +14,17 @@
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
+// memset
+#include <stdlib.h>
+// printf
+#include <stdio.h>
+// 
+#include <pthread.h>
+
 //unistd.h (for write) is included in libft.h
 # include "../libft/include/libft.h"
 # include "../libft/include/libft_bonus.h"
+
 //to use data type bool
 # include <stdbool.h>
 //to provide a standardized way to report and interpret error conditions
@@ -28,8 +36,6 @@
 // to consider readline while compiling
 # include <readline/history.h>
 # include <readline/readline.h>
-//stdio.h (for debugging) | stdlib.h (for malloc & free) | 
-# include <stdio.h>
 //to handle signals
 # include <signal.h>
 // to use struct sigaction
