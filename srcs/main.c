@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/11/25 16:13:05 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/11/25 16:24:54 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int mails = 0;
 
-void* routine()
+void* routine(void *arg)
 {
-    printf("Hello from threads\n");
+	int *result = arg;
+    printf("Hello from threads %d\n", *result);
     sleep(2);
     printf("Ending thread\n");
-	return (0);
+	return ((void *)result);
 }
 
 int	main(int argc, char **argv)
@@ -45,11 +46,16 @@ int	main(int argc, char **argv)
 			return (i + 1);
 		i++;
 	}
+	printf("Doing other things while the thread runs...\n");
+    printf("Waiting for thread to complete...\n");
 	i = 0;
 	while(i < nmb)
 	{
-		if (pthread_join(t[i], NULL) != 0)
+		// void **__thread_return
+		void *res;
+		if (pthread_join(t[i], &res) != 0)
 			return (i + 1);
+		printf("Thread %d complete!\n", *(int *)res);
 		i++;
 	}
 	return (0);
