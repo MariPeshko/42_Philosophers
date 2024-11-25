@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_race_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/11/26 00:11:27 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/11/26 00:01:01 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 int mails = 0;
-pthread_mutex_t mutex;
 
 // race condition
 void* routine(void *arg)
 {
 	int *result = arg;
-    for (int i = 0; i < 1000000; i++)
-	{
-        pthread_mutex_lock(&mutex);
+    for (int i = 0; i < 1000000; i++) {
+        //pthread_mutex_lock(&mutex);
         mails++;
-        pthread_mutex_unlock(&mutex);
+        //pthread_mutex_unlock(&mutex);
+		
+        // read mails
+        // increment
+        // write mails
     }
 	return ((void *)result);
 }
@@ -40,7 +42,6 @@ void* routine(void *arg)
 int	main(int argc, char **argv)
 {
 	no_arg(argc);
-	pthread_mutex_init(&mutex, NULL);
 	
 	int	nmb;
 	nmb = ft_atoi(argv[1]);
@@ -73,7 +74,7 @@ int	main(int argc, char **argv)
 		printf("Thread %d complete!\n", *(int *)res);
 		i++;
 	}
-	pthread_mutex_destroy(&mutex);
+	printf("Number of mails must be 2 000 000, but...\n");
 	printf("Number of mails: %d\n", mails);
 	return (0);
 }
