@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/11/25 16:08:10 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/11/25 16:13:05 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ void* routine()
 
 int	main(int argc, char **argv)
 {
-	if (argc != 2)
-	{
-		ft_dprintf("The program input:\n./philosophers [number_of_philosophers]\n");
-		exit(EXIT_FAILURE);
-	}
+	no_arg(argc);
 	
 	int	nmb;
 	nmb = ft_atoi(argv[1]);

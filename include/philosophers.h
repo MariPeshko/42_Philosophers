@@ -54,13 +54,7 @@ to execute minishell\n"
 //valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes 
 //--track-fds=yes --suppressions=suppressions.supp ./minishell
 
-//define a global variable for signal-handling
-extern int	g_signalnum;
-
-//01_pre_prompt/pre_prompt.c
-// t_big		*init_t_big(char **envp);
-// char		**copy_envp(char **envp);
-// int			ft_spacetabchecker(char *input);
-// void		ft_welcome(void);
+//np_arg.c
+void    no_arg(int argc);
 
 #endif
