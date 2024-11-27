@@ -20,6 +20,8 @@
 #include <stdio.h>
 // 
 #include <pthread.h>
+//
+#include <sys/time.h>
 
 //unistd.h (for write) is included in libft.h
 # include "../libft/include/libft.h"
