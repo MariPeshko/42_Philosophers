@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/11/28 17:48:43 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/11/28 23:43:00 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,29 @@ int	main(int argc, char **argv)
 	check_number_arg(argc);
 	pthread_mutex_init(&mutex, NULL);
 
-	analys_args(argv);
+	t_big *big;
+	big = malloc(sizeof(t_big));
+	if (init_big_struct(argv, big) == 1)
+	{
+		printf("init_big_struct returns 1, exit\n");
+		free(big);
+		exit(EXIT_FAILURE);
+	}
+
 	int	nmb;
-	nmb = ft_atoi(argv[1]);
+	nmb = big->nmb_of_ph;
+	// How to manage forks?
+	// int forks_available
+	
+	// What are patterns for different numbers of philo?
+	// If there are even number is one way, if uneven number 
+	// the way is different
+	
+	// while (ph-i && ph-i+2)
+	// eating ph-i next: ph-(i+=2) next: ph-(i+=2)
+	// then 
+	// while (ph-(i+1))
+	// eating ph-(i+=1) next ph(i+-1)
 
 	struct timeval current_time;
 	gettimeofday(&current_time, NULL);
@@ -56,9 +76,7 @@ int	main(int argc, char **argv)
 	// Array to pass thread numbers as arguments
 	int thread_numbers[nmb];
 	
-	int			i;
-	
-	i = 0;
+	int	i = 0;
 	while(i < nmb)
 	{
 		thread_numbers[i] = i + 1;
@@ -81,7 +99,7 @@ int	main(int argc, char **argv)
 	pthread_mutex_destroy(&mutex);
 	printf("Number of mails: %d\n", mails);
 
-	sleep(3);
+	sleep(2);
 
 	struct timeval current_time_2;
 	gettimeofday(&current_time_2, NULL);
@@ -107,5 +125,6 @@ int	main(int argc, char **argv)
 		time += current_time_2.tv_usec;
 		printf("Duration of execution is %ld ms\n", time);
 	}
+	free(big);
 	return (0);
 }

@@ -31,12 +31,12 @@
 
 typedef struct s_big
 {
-	t_list	*cmdlist;
-	char	**env;
-	char	**binarypaths;
-	int		exit_code;
-	size_t	count_commds;
-	bool	exe;
+	int	nmb_of_ph;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	//t_list	*cmdlist;
+	//bool	exe;
 }					t_big;
 
 //to provide a standardized way to report and interpret error conditions
@@ -67,8 +67,9 @@ to execute minishell\n"
 //--track-fds=yes --suppressions=suppressions.supp ./minishell
 
 //np_arg.c
-void    check_number_arg(int argc);
+void	check_number_arg(int argc);
 //pars.c
-void	analys_args(char **argv);
+int		init_big_struct(char **argv, t_big *big);
+void	analys_args_exit(char **argv);
 
 #endif
