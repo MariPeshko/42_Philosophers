@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "libft.h": "c",
-        "philosophers.h": "c"
+        "philosophers.h": "c",
+        "random": "c"
     }
 }

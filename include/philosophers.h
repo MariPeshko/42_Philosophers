@@ -14,6 +14,10 @@
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
+//unistd.h (for write) is included in libft.h
+# include "../libft/include/libft.h"
+# include "../libft/include/libft_bonus.h"
+
 // memset
 #include <stdlib.h>
 // printf
@@ -22,13 +26,19 @@
 #include <pthread.h>
 //
 #include <sys/time.h>
-
-//unistd.h (for write) is included in libft.h
-# include "../libft/include/libft.h"
-# include "../libft/include/libft_bonus.h"
-
 //to use data type bool
 # include <stdbool.h>
+
+typedef struct s_big
+{
+	t_list	*cmdlist;
+	char	**env;
+	char	**binarypaths;
+	int		exit_code;
+	size_t	count_commds;
+	bool	exe;
+}					t_big;
+
 //to provide a standardized way to report and interpret error conditions
 # include <errno.h>
 //to be able to work with function waitpid
@@ -57,6 +67,8 @@ to execute minishell\n"
 //--track-fds=yes --suppressions=suppressions.supp ./minishell
 
 //np_arg.c
-void    no_arg(int argc);
+void    check_number_arg(int argc);
+//pars.c
+void	analys_args(char **argv);
 
 #endif

@@ -12,7 +12,8 @@ RLFLAG = -lreadline -lncurses -ltinfo
 #VPATH = sources:include
 #INCLUDES = philosophers.h
 SRCS =	main.c \
-		no_arg.c
+		check_nmb_argc.c \
+		pars.c
 
 #test_and_debug/test_and_debug.c
 #test_and_debug/testprints.c

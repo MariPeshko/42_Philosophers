@@ -3,59 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mstracke <mstracke@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 09:51:13 by mstracke          #+#    #+#             */
-/*   Updated: 2023/11/21 11:09:17 by mstracke         ###   ########.fr       */
+/*   Created: 2023/12/20 20:11:00 by mpeshko           #+#    #+#             */
+/*   Updated: 2023/12/21 21:32:58 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* NAME: convert a string to an integer */
-/* DESCRIPTION: */
-/* The atoi() function converts the initial portion */
-/* of the string pointed to by nptr to int. */
-/* RETURN VALUE: */
-/* The converted value or 0 on error. */
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *str)
 {
 	int	i;
-	int	m;
-	int	r;
+	int	sign;
+	int	result;
 
 	i = 0;
-	m = 0;
-	r = 0;
-	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
+	sign = 1;
+	result = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == 32))
 		i++;
-	if (nptr[i] == 43 || nptr[i] == 45)
+	if (str[i] == '+' && str[i + 1] != '-')
+		i++;
+	if (str[i] == '-')
 	{
-		if (nptr[i] == 45)
-			m++;
+		sign = -1;
 		i++;
 	}
-	while (ft_isdigit(nptr[i]) == 1)
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		r = (r * 10);
-		r = r + (nptr[i] - 48);
+		result = result * 10;
+		result = result + (str[i] - '0');
 		i++;
 	}
-	if (m % 2 != 0)
-		r *= (-1);
-	return (r);
+	return (result * sign);
 }
-/*
-int	main(int argc, char **argv)
+/*int	main(void)
 {
-	int	r;
-	
-	if (argc == 2 && argv[1])
-		r = ft_atoi(argv[1]);
-	else
-		r = 999;
-	printf("result(me): %i\n", r);
-	printf("result(ex): %i\n", atoi(argv[1]));
-	return(0);
-}
-*/
+	const char	*string;
+	int	number;
+
+	string = "    ---+--+1234ab567";
+	printf("The string of characters is:\n%s\n", string);
+	number = ft_atoi(string);
+	printf("The result of atoi function is a number:\n%d\n", number);
+	return (0);
+}*/
