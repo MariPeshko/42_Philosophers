@@ -12,8 +12,11 @@ RLFLAG = -lreadline -lncurses -ltinfo
 #VPATH = sources:include
 #INCLUDES = philosophers.h
 SRCS =	main.c \
+		analys_args.c \
 		check_nmb_argc.c \
-		pars.c
+		pars.c \
+		pars_fill_big_list.c \
+		calloc.c
 
 #test_and_debug/test_and_debug.c
 #test_and_debug/testprints.c
@@ -34,7 +37,7 @@ all: $(NAME)
 #to create a program:
 $(NAME): $(OBJS) $(LIBFT_LIBRARY)
 	$(CC) $(CFLAGS) $^ -o $@ $(RLFLAG)
-	@echo -- prog created, try it by using ./minishell
+	@echo -- prog created, try it by using ./philosophers
 
 # %.o rule will compile one .c file to its correspondig object (.o) file: without this rule it would not update correctly
 # automatic variables: $@ = the file name of the target of the rule, $< = the name of the prerequisite

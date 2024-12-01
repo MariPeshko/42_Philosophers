@@ -28,15 +28,26 @@
 #include <sys/time.h>
 //to use data type bool
 # include <stdbool.h>
+// memset
+# include <string.h>
 
-typedef struct s_big
+typedef struct s_data
 {
-	int	nmb_of_ph;
+	int	total_nmb;
+	int thread_number;
+	int	forks;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
-	//t_list	*cmdlist;
-	//bool	exe;
+	pthread_t	thread;
+	// mutex curr
+	// mutex right
+	// ?? mutex left
+}				t_data;
+
+typedef struct s_big
+{
+	t_list	*ph_list;
 }					t_big;
 
 //to provide a standardized way to report and interpret error conditions
@@ -69,7 +80,13 @@ to execute minishell\n"
 //np_arg.c
 void	check_number_arg(int argc);
 //pars.c
-int		init_big_struct(char **argv, t_big *big);
-void	analys_args_exit(char **argv);
+int		init_big_struct(t_big *big);
+//pars_fill_big_list.c
+int		fill_big_list(char **argv, t_big **big);
+//calloc.c
+void	*ft_new_calloc(size_t nmemb, size_t size);
+void	ft_new_putstr_fd(char *s, int fd);
+//analys_args.c
+int		analys_args(char **argv);
 
 #endif

@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars.c                                             :+:      :+:    :+:   */
+/*   calloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/01 19:22:54 by mpeshko          ###   ########.fr       */
+/*   Created: 2024/12/01 15:19:15 by mpeshko           #+#    #+#             */
+/*   Updated: 2024/12/01 19:33:14 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// static int	ft_isdigit(int c)
+void	*ft_new_calloc(size_t nmemb, size_t size)
+{
+	void	*r;
+
+	r = malloc(size * nmemb);
+	if (!r)
+		return (0);
+	memset(r, 0, (nmemb * size));
+	return (r);
+}
+
+// поверну це, коли видалю libft
+// static void	ft_putchar_fd(char c, int fd)
 // {
-// 	if (c >= 48 && c <= 57)
-// 		return (1);
-// 	else
-// 		return (0);
+// 	write(fd, &c, 1);
 // }
 
-int	init_big_struct(t_big *big) // char **argv, 
+void	ft_new_putstr_fd(char *s, int fd)
 {
-	big->ph_list = NULL;
-	return (0);
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_fd(s[i], fd);
+		i++;
+	}
 }
