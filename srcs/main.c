@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/01 20:17:22 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/02 00:54:43 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static void *routine() // void *arg
 // 	return ((void *)result);
 // }
 
-
-
 int	main(int argc, char **argv)
 {
 	check_number_arg(argc);
@@ -62,57 +60,76 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Problems with malloc\n", 2);
 		return (1);
 	}
-	if (init_big_struct(big) == 1)
+	if (init_big_struct(big) == 1) // argv, 
 	{
 		printf("init_big_struct returns 1, exit\n");
 		free(big);
 		return (1);
 	}
-	fill_big_list(argv, &big);
-	
-	int	nmb;
-	nmb = ((t_data *)(big->ph_list->content))->forks;
-	printf("is this norm?\n");
-	printf("((t_data *)(big->ph_list->content))->forks %d\n", ((t_data *)(big->ph_list->content))->forks);
-	nmb = 1;
+	if (fill_big_list(argv, &big) == 1)
+	{
+		printf("fill_big_list returns 1, exit\n");
+		free(big);
+		return (1);
+	}
+	print_my_list(big);
 	
 	struct timeval current_time;
 	gettimeofday(&current_time, NULL);
 	printf("micro seconds : %ld\n", current_time.tv_usec);
-	// Array to store thread IDs
-	pthread_t	tt = ((t_data *)(big->ph_list->content))->thread;
-	// Array to pass thread numbers as arguments
-	//int thread_numbers[nmb];
 	
 	int	i = 0;
-	// Ось тут додам ітерацію по лінкед лісту.
-	// Функція pthread_create буде отримувати новий нод
-	// для кожного філософа.
-	while(i < nmb)
+	t_list *iter;
+	
+	iter = ((t_list *)(big->ph_list));
+	int n;
+	t_data *ddd = (t_data *)(iter->content);
+	n = ddd->thread;
+	pthread_t	tt[n];
+	while (iter)
+	//while (i < nmb)
 	{
-		// 1 for 1t thread, 2 for 2d thread
-		if (pthread_create(&tt, NULL, &routine, NULL) != 0) 
+		printf("loop %d\n", i);
+		//pthread_t	tt;
+		//tt = ((t_data *)((iter)->content))->thread;
+		if (pthread_create(&tt[i], NULL, &routine, NULL) != 0) 
 			return (i + 1);
 		i++;
+		iter = iter->next;
 	}
 	printf("Doing other things while the thread runs...\n");
     printf("Waiting for thread to complete...\n");
-	i = 0;
-	while(i < nmb)
+	
+	int b = 0;
+	
+	t_list *iter_sec;
+	iter_sec = ((t_list *)(big->ph_list));
+	if (!iter_sec)
+		printf("t_list iter_sec == NULL\n");
+	while (iter_sec)
+	//while(i < nmb)
 	{
-		// void **__thread_return
+		printf("loop_join %d\n", b);
+		//pthread_t	ttj;
+		//ttj = ((t_data *)((iter_sec)->content))->thread;
 		void *res;
-		if (pthread_join(tt, (void**) &res) != 0)
-			return (i + 1);
+		if (pthread_join(tt[b], &res) != 0)
+		{
+			printf("pthread_join returned not 0\n");
+			return (b + 1);
+		}
 		if (res != NULL)
 			printf("Thread %d died!\n", *(int *)res);
-		i++;
+		else if (res == NULL)
+			printf("res == NULL\n");
+		b++;
 		free(res);
+		iter_sec = iter_sec->next;
 	}
 	
-	pthread_mutex_destroy(&mutex);
-
 	sleep(2);
+	
+	pthread_mutex_destroy(&mutex);
 
 	// struct timeval current_time_2;
 	// gettimeofday(&current_time_2, NULL);
@@ -139,8 +156,8 @@ int	main(int argc, char **argv)
 	// 	printf("Duration of execution is %ld ms\n", time);
 	// }
 	
-	free((t_data *)(big->ph_list->content));
-	free(big->ph_list);
+	ft_free_cl(&(big->ph_list));
 	free(big);
+	big = NULL;
 	return (0);
 }

@@ -34,7 +34,7 @@
 typedef struct s_data
 {
 	int	total_nmb;
-	int thread_number;
+	int	thread_number;
 	int	forks;
 	int	time_to_die;
 	int	time_to_eat;
@@ -47,6 +47,7 @@ typedef struct s_data
 
 typedef struct s_big
 {
+	//size_t	nmb;
 	t_list	*ph_list;
 }					t_big;
 
@@ -80,7 +81,7 @@ to execute minishell\n"
 //np_arg.c
 void	check_number_arg(int argc);
 //pars.c
-int		init_big_struct(t_big *big);
+int		init_big_struct(t_big *big); // char **argv, 
 //pars_fill_big_list.c
 int		fill_big_list(char **argv, t_big **big);
 //calloc.c
@@ -88,5 +89,9 @@ void	*ft_new_calloc(size_t nmemb, size_t size);
 void	ft_new_putstr_fd(char *s, int fd);
 //analys_args.c
 int		analys_args(char **argv);
+//debug.c
+void    print_my_list(t_big *big);
+//cleanup.c
+void	ft_free_cl(t_list **ll);
 
 #endif

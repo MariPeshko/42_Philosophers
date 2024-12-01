@@ -16,6 +16,8 @@ SRCS =	main.c \
 		check_nmb_argc.c \
 		pars.c \
 		pars_fill_big_list.c \
+		debug.c \
+		cleanup.c \
 		calloc.c
 
 #test_and_debug/test_and_debug.c
