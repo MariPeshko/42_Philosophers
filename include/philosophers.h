@@ -31,25 +31,50 @@
 // memset
 # include <string.h>
 
-typedef struct s_data
-{
-	int	total_nmb;
-	int	thread_number;
-	int	forks;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	pthread_t	thread;
-	// mutex curr
-	// mutex right
-	// ?? mutex left
-}				t_data;
+# define SUCCESS 0
+# define FAILURE 1
 
-typedef struct s_big
+typedef struct s_table	t_table;
+typedef struct s_philo	t_philo;
+typedef enum e_status	t_status;
+
+enum	e_status
 {
-	//size_t	nmb;
-	t_list	*ph_list;
-}					t_big;
+	EATING,
+	SLEEPING,
+	THINKING,
+	DEAD,
+	DONE
+};
+
+struct s_philo
+{
+	t_table			*tbl;
+	pthread_t		thread_t;
+	size_t			philo_id;
+	pthread_mutex_t	lock;
+	// one more
+	pthread_mutex_t	*left;
+	pthread_mutex_t	*right;
+	t_status		*status;
+};
+
+struct s_table
+{
+	int				total_nmb;
+	long			time_die;
+	long			time_eat;
+	long			time_sleep;
+	long			start_time;
+	pthread_mutex_t	mtx_create;
+	pthread_mutex_t *mtxs;
+	struct s_philo	**philos;
+	// dead flag
+	// the simulation stops when a philosopher dies
+	bool			dead;
+	// long			max_meal; why?
+	// int			full_philo_n; what?
+};
 
 //to provide a standardized way to report and interpret error conditions
 # include <errno.h>
@@ -78,19 +103,23 @@ to execute minishell\n"
 //valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes 
 //--track-fds=yes --suppressions=suppressions.supp ./minishell
 
-//np_arg.c
-void	check_number_arg(int argc);
+//check_nmb_argc.c
+int		check_number_arg(int argc);
+//analys_args.c
+int		analys_args(char **argv);
 //pars.c
-int		init_big_struct(t_big *big); // char **argv, 
+int		init_table(char **argv, t_table *table);
 //pars_fill_big_list.c
-int		fill_big_list(char **argv, t_big **big);
+int		init_mtx(t_table *table);
+//init_philosophers.c
+void	init_philosophers(t_table *table);
+//dining.c
+void	start_dining(t_table *table);
 //calloc.c
 void	*ft_new_calloc(size_t nmemb, size_t size);
 void	ft_new_putstr_fd(char *s, int fd);
-//analys_args.c
-int		analys_args(char **argv);
 //debug.c
-void    print_my_list(t_big *big);
+void	print_tests(t_table *table);
 //cleanup.c
 void	ft_free_cl(t_list **ll);
 
