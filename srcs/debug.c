@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 23:13:37 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/02 14:14:33 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/02 19:34:44 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,5 @@
 void    print_tests(t_table *table)
 {
     printf("print_tests\n");
+    printf("total number: %i\n", table->total_nmb);
 }

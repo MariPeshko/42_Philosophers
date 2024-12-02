@@ -51,12 +51,13 @@ struct s_philo
 {
 	t_table			*tbl;
 	pthread_t		thread_t;
-	size_t			philo_id;
+	int				philo_id;
 	pthread_mutex_t	lock;
 	// one more
-	pthread_mutex_t	*left;
-	pthread_mutex_t	*right;
-	t_status		*status;
+	pthread_mutex_t	*left_f;
+	pthread_mutex_t	*right_f;
+	t_status		status;
+	// time_finished_eating
 };
 
 struct s_table
@@ -67,7 +68,7 @@ struct s_table
 	long			time_sleep;
 	long			start_time;
 	pthread_mutex_t	mtx_create;
-	pthread_mutex_t *mtxs;
+	pthread_mutex_t **f_mtxs;
 	struct s_philo	**philos;
 	// dead flag
 	// the simulation stops when a philosopher dies
@@ -112,7 +113,7 @@ int		init_table(char **argv, t_table *table);
 //pars_fill_big_list.c
 int		init_mtx(t_table *table);
 //init_philosophers.c
-void	init_philosophers(t_table *table);
+int		init_philosophers(t_table *table);
 //dining.c
 void	start_dining(t_table *table);
 //calloc.c
@@ -121,6 +122,5 @@ void	ft_new_putstr_fd(char *s, int fd);
 //debug.c
 void	print_tests(t_table *table);
 //cleanup.c
-void	ft_free_cl(t_list **ll);
 
 #endif

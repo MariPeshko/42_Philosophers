@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/02 15:53:25 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/02 19:29:15 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,35 +50,6 @@ static int	pars_timing(char *str_time_to_do, long *timing)
 	*timing = time_to_do;
 	return (0);
 	
-}
-
-int	init_tmp(t_data *tmp, t_data *base, int i)
-{
-	//pthread_t *th;
-	
-	tmp->total_nmb = base->total_nmb;
-	tmp->forks = tmp->total_nmb;
-	tmp->time_to_die = base->time_to_die;
-	tmp->time_to_eat = base->time_to_eat;
-	tmp->time_to_sleep = base->time_to_sleep;
-	//tmp->thread = th;
-	tmp->thread_id = i;
-	printf("thread_id: %d\n", tmp->thread_id);
-	return (0);
-}
-
-int	init_base_data(char **argv, t_data *tmp)
-{
-	
-	
-	printf("time_to_die: %d milliseconds\n", tmp->time_to_die);
-	if (pars_timing(argv[3], &(tmp->time_to_eat)) != 0)
-		return (1);
-	printf("time_to_eat: %d milliseconds\n", tmp->time_to_eat);
-	if (pars_timing(argv[4], &(tmp->time_to_sleep)) != 0)
-		return (1);
-	printf("time_to_sleep: %d milliseconds\n", tmp->time_to_sleep);
-	return (0);
 }
 
 /**
