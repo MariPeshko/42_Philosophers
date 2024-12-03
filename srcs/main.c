@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/03 14:56:38 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/03 21:00:35 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	if (analys_args(argv) == 1)
 		return (FAILURE);
 	//printf("test_00\n");
-	table = ft_new_calloc(1, sizeof(table));
+	table = ft_new_calloc(1, sizeof(t_table));
 	if (table == NULL)
 		return (FAILURE);
 	//printf("test_01\n");
@@ -40,9 +40,7 @@ int	main(int argc, char **argv)
 	
 	// not ready
 	init_philosophers(table);
-	//printf("test_04\n");
-	print_tests(table);
-
+	//print_tests(table);
 	start_dining(table);
 	
 	destroy_mtx(table);

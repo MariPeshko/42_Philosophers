@@ -57,7 +57,7 @@ struct s_philo
 	pthread_mutex_t	*left_f;
 	pthread_mutex_t	*right_f;
 	t_status		status;
-	long			time_finished_eating;
+	time_t			time_last_meal;
 };
 
 struct s_table
@@ -66,8 +66,10 @@ struct s_table
 	long			time_die;
 	long			time_eat;
 	long			time_sleep;
-	long			start_time;
+	time_t			start_time;
 	pthread_mutex_t	mtx_create;
+	pthread_mutex_t	mtx_dead;
+	pthread_mutex_t	mtx_msg;
 	pthread_mutex_t **f_mtxs;
 	struct s_philo	**philos;
 	// the simulation stops when a philosopher dies

@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/02 19:29:15 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/03 18:58:42 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	init_table(char **argv, t_table *table)
 		return (1);
 	//if (ac == 6)
 	table->dead = false;
+	table->start_time = 0;
 	return (0);
 }
 
