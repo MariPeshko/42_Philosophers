@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/02 20:44:31 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/03 14:56:38 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,21 @@ int	main(int argc, char **argv)
 		free(table);
 		return (FAILURE);
 	}
-	//printf("test_02\n");
-	
 	// not ready
 	if (init_mtx(table) == 1)
 	{
 		free(table);
 		return (FAILURE);
 	}
-	//printf("test_03\n");
 	
 	// not ready
 	init_philosophers(table);
 	//printf("test_04\n");
 	print_tests(table);
 
-	//start_dining(table);
+	start_dining(table);
 	
+	destroy_mtx(table);
 	// знищити s_philo	**philos;
 	free(table);
 	return (SUCCESS);

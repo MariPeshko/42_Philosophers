@@ -57,7 +57,7 @@ struct s_philo
 	pthread_mutex_t	*left_f;
 	pthread_mutex_t	*right_f;
 	t_status		status;
-	// time_finished_eating
+	long			time_finished_eating;
 };
 
 struct s_table
@@ -70,7 +70,6 @@ struct s_table
 	pthread_mutex_t	mtx_create;
 	pthread_mutex_t **f_mtxs;
 	struct s_philo	**philos;
-	// dead flag
 	// the simulation stops when a philosopher dies
 	bool			dead;
 	// long			max_meal; why?
@@ -115,12 +114,13 @@ int		init_mtx(t_table *table);
 //init_philosophers.c
 int		init_philosophers(t_table *table);
 //dining.c
-void	start_dining(t_table *table);
+int		start_dining(t_table *table);
 //calloc.c
 void	*ft_new_calloc(size_t nmemb, size_t size);
 void	ft_new_putstr_fd(char *s, int fd);
 //debug.c
 void	print_tests(t_table *table);
 //cleanup.c
+void	destroy_mtx(t_table *table);
 
 #endif
