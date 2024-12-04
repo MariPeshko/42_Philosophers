@@ -124,5 +124,6 @@ void	ft_new_putstr_fd(char *s, int fd);
 void	print_tests(t_table *table);
 //cleanup.c
 void	destroy_mtx(t_table *table);
+void	free_philos(t_philo **philos, int total_nmb);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/03 21:05:22 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/04 18:56:06 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,19 @@ int start_dining(t_table *table)
 	}
 	i = 0;
 	//t_philo	*ph;
-	pthread_mutex_lock(&table->mtx_create);
+	
 	// if (table->time_die == 0)
 	// {
 	// 	table->dead = true;
 	// 	printf("Philosopher needs more than 0 ms \n");
 	// }
+	if (table->total_nmb == 1)
+	{
+		ph = table->philos[i];
+		printf("%li %i died\n", curr_time(), ph->philo_id);
+		return (SUCCESS);
+	}
+	pthread_mutex_lock(&table->mtx_create);
 	while (i < table->total_nmb)
 	{
 		ph = table->philos[i];

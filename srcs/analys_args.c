@@ -6,22 +6,28 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 19:12:39 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/01 19:13:14 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/04 19:15:57 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	is_digit_check(char *argv)
+static int	arg_valid_check(char *argv, int nbr)
 {
 	int	i;
 
 	i = 0;
 	if (argv[i] == '+' || argv[i] == '-')
 			i++;
+	if (!*argv)
+	{
+		printf("Argument %i is an empty string\n", nbr);
+		return (1);
+	}
 	if (argv[i] == '+' || argv[i] == '-')
 	{
-		printf("Sorry, there is an extra - or + here. Try again!\n");
+		printf("Sorry, there is an extra - or + ");
+		printf("in argument %i.\nTry again!\n", nbr);
 		return (1);
 	}
 	while(argv[i])
@@ -30,8 +36,8 @@ static int	is_digit_check(char *argv)
 			i++;
 		else
 		{
-			printf("'%c' is not a digit.\n", argv[i]);
-			printf("Please avoid using letters or \n");
+			printf("'%c' is not a digit in argument %i.\n", argv[i], nbr);
+			printf("Please avoid using letters or ");
 			printf("special characters.\n");
 			return (1);
 		}
@@ -41,13 +47,13 @@ static int	is_digit_check(char *argv)
 
 int	analys_args(char **argv)
 {
-	if (is_digit_check(argv[1]) == 1)
+	if (arg_valid_check(argv[1], 1) == 1)
 		return (1);
-	if (is_digit_check(argv[2]) == 1)
+	if (arg_valid_check(argv[2], 2) == 1)
 		return (1);
-	if (is_digit_check(argv[3]) == 1)
+	if (arg_valid_check(argv[3], 3) == 1)
 		return (1);
-	if (is_digit_check(argv[4]) == 1)
+	if (arg_valid_check(argv[4], 4) == 1)
 		return (1);
 	return (0);
 }

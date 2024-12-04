@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/03 21:00:35 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/04 19:05:17 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 	start_dining(table);
 	
 	destroy_mtx(table);
-	// знищити s_philo	**philos;
+	free_philos(table->philos, table->total_nmb);
 	free(table);
 	return (SUCCESS);
 }
