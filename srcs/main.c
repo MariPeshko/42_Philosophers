@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/04 19:05:17 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/05 00:23:11 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,5 @@ int	main(int argc, char **argv)
 	free(table);
 	return (SUCCESS);
 }
+
+

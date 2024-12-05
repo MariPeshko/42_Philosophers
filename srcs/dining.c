@@ -6,21 +6,11 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/04 18:56:06 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/05 02:39:24 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-time_t	curr_time()
-{
-	struct timeval current_time;
-	time_t	value;
-	
-	gettimeofday(&current_time, NULL);
-	value = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	return (value);
-}
 
 /**
  * Routine is neverending loop if every philosopher is alive.
@@ -32,81 +22,140 @@ static void *routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	int *result = malloc(sizeof(int));
+	*result = -1;
 	while (1)
 	{
-		pthread_mutex_lock(&philo->tbl->mtx_dead);
-		if (philo->tbl->dead == true)
+		if (is_dead(philo) == 1)
 		{
-			pthread_mutex_unlock(&philo->tbl->mtx_dead);
-			int *result = malloc(sizeof(int));
-			*result = -1;
 			return ((void *)result);
 		}
-		else
+		if (philo->philo_id % 2 == 0)
 		{
-			long diff;
-			diff = (curr_time()) - philo->time_last_meal;
-			printf("%li ms philosopher %i %li ms without meal\n", curr_time(), philo->philo_id, diff);
-			if (diff >= philo->tbl->time_die || philo->tbl->time_die == 0)
-			{
-				philo->tbl->dead = true;
-				pthread_mutex_lock(&philo->tbl->mtx_msg);
-				printf("%li ms %i died\n", curr_time(), philo->philo_id);
-				pthread_mutex_unlock(&philo->tbl->mtx_msg);
-				pthread_mutex_unlock(&philo->tbl->mtx_dead);
-				int *result = malloc(sizeof(int));
-				*result = -1;
-				return ((void *)result);
-			}
-			else
-				pthread_mutex_unlock(&philo->tbl->mtx_dead);
-		}
+		// check availabilty of both - how?
 		pthread_mutex_lock(philo->left_f);
+		if (philo->tbl->dead == true)
+		{
+			pthread_mutex_unlock(philo->left_f);
+			return ((void *)result);
+		}
+		pthread_mutex_lock(&philo->tbl->mtx_msg);
+		printf("%li %i has taken a fork\n", curr_time(), philo->philo_id);
+		pthread_mutex_unlock(&philo->tbl->mtx_msg);
+		// check availabilty of both - how?
 		pthread_mutex_lock(philo->right_f);
 		if (philo->tbl->dead == true)
 		{
-			int *result = malloc(sizeof(int));
-			*result = -1;
+			pthread_mutex_unlock(philo->right_f);
+			return ((void *)result);
+		}
+		}
+		else
+		{
+			pthread_mutex_lock(philo->right_f);
+			if (philo->tbl->dead == true)
+			{
+				pthread_mutex_unlock(philo->right_f);
+				return ((void *)result);
+			}
+			pthread_mutex_lock(&philo->tbl->mtx_msg);
+			
+			printf("%li %i has taken a fork\n", curr_time(), philo->philo_id);
+			pthread_mutex_unlock(&philo->tbl->mtx_msg);
+			pthread_mutex_lock(philo->left_f);
+			if (philo->tbl->dead == true)
+			{
+				pthread_mutex_unlock(philo->left_f);
+				return ((void *)result);
+			}
+		}
+		pthread_mutex_lock(&philo->tbl->mtx_msg);
+		printf("%li %i has taken a fork\n", curr_time(), philo->philo_id);
+		pthread_mutex_unlock(&philo->tbl->mtx_msg);
+		if (philo->tbl->dead == true)
+		{
+			pthread_mutex_unlock(philo->left_f);
+			pthread_mutex_unlock(philo->right_f);
+			return ((void *)result);
+		}
+		else if (is_dead(philo) == 1)
+		{
 			pthread_mutex_unlock(philo->left_f);
 			pthread_mutex_unlock(philo->right_f);
 			return ((void *)result);
 		}
 		else
 		{
-			pthread_mutex_lock(&philo->tbl->mtx_msg);
-			printf("%i has taken a fork\n", philo->philo_id);
-			pthread_mutex_unlock(&philo->tbl->mtx_msg);
 			philo->status = EATING;
 			pthread_mutex_lock(&philo->tbl->mtx_msg);
-			printf("%i is eating\n", philo->philo_id);
+			printf("%li %i is eating\n", curr_time(), philo->philo_id);
 			pthread_mutex_unlock(&philo->tbl->mtx_msg);
 			usleep(philo->tbl->time_eat * 1000);
+			pthread_mutex_lock(&philo->lock);
 			philo->time_last_meal = curr_time();
+			pthread_mutex_unlock(&philo->lock);
+			
 			pthread_mutex_unlock(philo->left_f);
 			pthread_mutex_unlock(philo->right_f);
 		}
 		philo->status = SLEEPING;
+		pthread_mutex_lock(&philo->tbl->mtx_msg);
 		if (philo->tbl->dead == true)
 		{
-			int *result = malloc(sizeof(int));
-			*result = -1;
+			pthread_mutex_unlock(&philo->tbl->mtx_msg);
 			return ((void *)result);
 		}
-		pthread_mutex_lock(&philo->tbl->mtx_msg);
-		printf("%li ms %i is sleeping\n", curr_time(), philo->philo_id);
+		printf("%li %i is sleeping\n", curr_time(), philo->philo_id);
 		pthread_mutex_unlock(&philo->tbl->mtx_msg);
 		usleep(philo->tbl->time_sleep * 1000);
 		if (philo->tbl->dead == true)
-		{
-			int *result = malloc(sizeof(int));
-			*result = -1;
 			return ((void *)result);
-		}
+		pthread_mutex_lock(&philo->tbl->mtx_msg);
+		printf("%li %i is thinking\n", curr_time(), philo->philo_id);
+		pthread_mutex_unlock(&philo->tbl->mtx_msg);
 		i++;
 	}
-	int *result = malloc(sizeof(int));
-	*result = philo->philo_id;
 	return ((void *)result);
+}
+
+static void	*routine_loop(void *arg)
+{
+	t_table *table;
+	t_philo	**philosophers;
+	int		i;
+
+	table = (t_table *)arg;
+	philosophers = table->philos;
+	i = 0;
+	int *result;
+	int x;
+	x = 1;
+	result = &x;
+	while (1)
+	{
+		i = 0;
+		usleep(80);
+		while (i < table->total_nmb)
+		{
+			if (philosophers[i]->status != EATING)
+			{
+				if (is_dead_monitor(philosophers[i]) == 1)
+				{
+					pthread_mutex_lock(&table->mtx_dead);
+					table->dead = true;
+					printf("actual death of %i philosopher\n", i + 1);
+					detach_all(philosophers, table->total_nmb);
+					pthread_mutex_unlock(&table->mtx_dead);
+					return ((void *)result);
+				}
+			}
+			if (table->dead == true)
+				return ((void *)result);
+			i++;
+		}
+		if (table->dead == true)
+			return ((void *)result);
+	}
 }
 
 /**
@@ -115,15 +164,11 @@ static void *routine(void *arg)
 */
 int start_dining(t_table *table)
 {
-    printf("dining\n");
-	table->start_time = curr_time();
-	
-	printf("start_time: %li\n", table->start_time);
-
 	t_philo	*ph;
     int		i;
 
 	i = 0;
+	table->start_time = curr_time();
 	while (i < table->total_nmb)
 	{
 		ph = table->philos[i];
@@ -144,7 +189,8 @@ int start_dining(t_table *table)
 		printf("%li %i died\n", curr_time(), ph->philo_id);
 		return (SUCCESS);
 	}
-	pthread_mutex_lock(&table->mtx_create);
+	pthread_create(&table->loop_thread, NULL, &routine_loop, table);
+	//pthread_mutex_lock(&table->mtx_create);
 	while (i < table->total_nmb)
 	{
 		ph = table->philos[i];
@@ -152,12 +198,11 @@ int start_dining(t_table *table)
 			return (i + 1);
 		i++;
 	}
-	pthread_mutex_unlock(&table->mtx_create);
+	//pthread_mutex_unlock(&table->mtx_create);
 	
-	printf("Doing other things while the thread runs...\n");
-    printf("Waiting for thread to complete...\n");
 	i = 0;
-	while(i < table->total_nmb)
+	
+	while (i < table->total_nmb)
 	{
 		ph = table->philos[i];
 		void *res;
@@ -173,5 +218,7 @@ int start_dining(t_table *table)
 		i++;
 		free(res);
 	}
+	if (pthread_join(table->loop_thread, NULL) != 0)
+		return (i + 1);
 	return (SUCCESS);
 }

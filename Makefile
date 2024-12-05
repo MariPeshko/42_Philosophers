@@ -18,6 +18,8 @@ SRCS =	main.c \
 		pars_fill_big_list.c \
 		init_philosophers.c \
 		dining.c \
+		is_dead.c \
+		time.c \
 		debug.c \
 		cleanup.c \
 		calloc.c

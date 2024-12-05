@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:47 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/03 21:00:41 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/04 22:17:06 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,16 @@ static int	init_forks(t_table *table)
  {
     philosoph->tbl = table;
     philosoph->philo_id = i + 1;
-    // Initialization of mutex for ...
 	if (pthread_mutex_init(&philosoph->lock, NULL) != 0)
 	{
 		write(2, "mutex init failed", 17);
 		return (1);
 	}
-	// What is right fork?
-	if ((i + 1) == table->total_nmb)
+	philosoph->left_f = table->f_mtxs[i];
+	if (philosoph->philo_id == table->total_nmb)
 		philosoph->right_f = table->f_mtxs[0];
 	else
 		philosoph->right_f = table->f_mtxs[i + 1];
-	philosoph->left_f = table->f_mtxs[i];
     philosoph->status = THINKING;
 	philosoph->time_last_meal = 0;
     return (0);

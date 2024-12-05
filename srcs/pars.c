@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/03 18:58:42 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/04 22:29:00 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	pars_num_of_phil(char *str_nmb_of_phil, int *int_from_big_struct)
 	int	phs;
 
 	phs = ft_atoi(str_nmb_of_phil);
-	printf("number_of_philosophers: %d\n", phs);
 	if (phs < 0)
 	{
 		printf("Please enter a positive number of philosophers.\n");
@@ -69,6 +68,7 @@ int	init_table(char **argv, t_table *table)
 	//if (ac == 6)
 	table->dead = false;
 	table->start_time = 0;
+	
 	return (0);
 }
 

@@ -76,6 +76,7 @@ struct s_table
 	bool			dead;
 	// long			max_meal; why?
 	// int			full_philo_n; what?
+	pthread_t		loop_thread;
 };
 
 //to provide a standardized way to report and interpret error conditions
@@ -117,6 +118,13 @@ int		init_mtx(t_table *table);
 int		init_philosophers(t_table *table);
 //dining.c
 int		start_dining(t_table *table);
+//is_dead.c
+int		is_dead(t_philo *philo);
+int		is_dead_monitor(t_philo *philo);
+int		detach_all(t_philo **philosophers, int total_nmb);
+
+//time.c
+time_t	curr_time();
 //calloc.c
 void	*ft_new_calloc(size_t nmemb, size_t size);
 void	ft_new_putstr_fd(char *s, int fd);
