@@ -3,7 +3,7 @@
 #variables
 CUR_DIR = $(shell pwd)
 LIBFT_PATH = $(CUR_DIR)/libft
-NAME = philosophers
+NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -Iinclude -Isrcs -pthread -Ireadline
 RLFLAG = -lreadline -lncurses -ltinfo
@@ -18,6 +18,7 @@ SRCS =	main.c \
 		pars_fill_big_list.c \
 		init_philosophers.c \
 		dining.c \
+		routine_one.c \
 		is_dead.c \
 		time.c \
 		debug.c \
@@ -43,7 +44,7 @@ all: $(NAME)
 #to create a program:
 $(NAME): $(OBJS) $(LIBFT_LIBRARY)
 	$(CC) $(CFLAGS) $^ -o $@ $(RLFLAG)
-	@echo -- prog created, try it by using ./philosophers
+	@echo -- prog created, try it by using ./philo
 
 # %.o rule will compile one .c file to its correspondig object (.o) file: without this rule it would not update correctly
 # automatic variables: $@ = the file name of the target of the rule, $< = the name of the prerequisite
