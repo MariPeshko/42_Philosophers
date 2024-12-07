@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 12:32:23 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 18:22:42 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	pars_num_of_phil(char *str_nmb_of_phil, int *int_from_big_struct)
 	return (0);
 }
 
-static int	pars_timing(char *str_time_to_do, long *timing)
+static int	pars_timing(char *str_time_to_do, unsigned long *timing)
 {
 	long	time_to_do;
 
@@ -71,7 +71,8 @@ int	init_table(char **argv, t_table *table)
 			return (1);
 		}
 	}
-	printf("Minimum meal for each: %li\n", table->minimum_meal);
+	else
+		table->minimum_meal = 2147483647;
 	table->dead = false;
 	table->start_time = 0;
 	table->all_full = false;

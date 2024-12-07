@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 19:12:39 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 12:13:10 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 14:42:58 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ static int	arg_valid_check(char *argv, int nbr)
 
 int	analys_args(char **argv)
 {
-	if (arg_valid_check(argv[1], 1) == 1)
+	if (argv[1] && arg_valid_check(argv[1], 1) == 1)
 		return (1);
-	if (arg_valid_check(argv[2], 2) == 1)
+	if (argv[2] && arg_valid_check(argv[2], 2) == 1)
 		return (1);
-	if (arg_valid_check(argv[3], 3) == 1)
+	if (argv[3] && arg_valid_check(argv[3], 3) == 1)
 		return (1);
-	if (arg_valid_check(argv[4], 4) == 1)
+	if (argv[4] && arg_valid_check(argv[4], 4) == 1)
 		return (1);
-	if (arg_valid_check(argv[5], 5) == 1)
+	if (argv[5] && arg_valid_check(argv[5], 5) == 1)
 		return (1);
 	return (0);
 }

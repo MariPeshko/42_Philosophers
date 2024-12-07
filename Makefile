@@ -20,6 +20,7 @@ SRCS =	main.c \
 		dining.c \
 		routine_one.c \
 		is_dead.c \
+		all_full.c \
 		time.c \
 		debug.c \
 		cleanup.c \

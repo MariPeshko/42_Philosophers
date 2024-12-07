@@ -56,24 +56,24 @@ struct s_philo
 	pthread_mutex_t	*left_f;
 	pthread_mutex_t	*right_f;
 	t_status		status;
-	time_t			time_last_meal;
+	unsigned long	time_last_meal;
 	long			amount_meal;
 };
 
 struct s_table
 {
 	int				total_nmb;
-	long			time_die;
-	long			time_eat;
-	long			time_sleep;
-	time_t			start_time;
+	unsigned long			time_die;
+	unsigned long			time_eat;
+	unsigned long			time_sleep;
+	unsigned long	start_time;
 	pthread_mutex_t	mtx_create;
 	pthread_mutex_t	mtx_dead;
 	pthread_mutex_t	mtx_msg;
 	pthread_mutex_t **f_mtxs;
 	struct s_philo	**philos;
 	bool			dead;
-	long			minimum_meal;
+	unsigned long			minimum_meal;
 	bool			all_full;
 	pthread_t		loop_thread;
 };
@@ -122,10 +122,12 @@ void	*routine_one(void *arg);
 //is_dead.c
 int		is_dead(t_philo *philo);
 int		is_dead_monitor(t_philo *philo);
-int		temp_print(t_philo **philosophers, int total_nmb);
-
+//all_full.c
+int		all_full(t_table *table);
 //time.c
-time_t	curr_time();
+int		ft_usleep(unsigned long time);
+unsigned long	curr_time();
+
 //calloc.c
 void	*ft_new_calloc(size_t nmemb, size_t size);
 void	ft_new_putstr_fd(char *s, int fd);
