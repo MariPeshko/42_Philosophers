@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 18:29:14 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 23:09:23 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /**
  * Routine is neverending loop if every philosopher is alive.
  * If someone is dead, then bool dead is true, and this even break the circle.
+ * 
+ * Even philosophers wait slightly to prevent contention.
 */
 static void *routine(void *arg)
 {
@@ -28,7 +30,7 @@ static void *routine(void *arg)
 	int *result = malloc(sizeof(int));
 	*result = philo->philo_id;
 	if (philo->philo_id % 2 == 0)
-		usleep(30);
+		ft_usleep(5);
 	while (1)
 	{
 		if (philo->philo_id % 2 == 0)
@@ -39,9 +41,9 @@ static void *routine(void *arg)
 				pthread_mutex_unlock(philo->left_f);
 				return ((void *)result);
 			}
-			pthread_mutex_lock(&philo->lock);
+			pthread_mutex_lock(&philo->tbl->mtx_time);
 			timestamp = curr_time() - philo->tbl->start_time;
-			pthread_mutex_unlock(&philo->lock);
+			pthread_mutex_unlock(&philo->tbl->mtx_time);
 			
 			pthread_mutex_lock(&philo->tbl->mtx_msg);
 			printf("%li %i has taken a fork\n", timestamp, philo->philo_id);
@@ -62,9 +64,9 @@ static void *routine(void *arg)
 				pthread_mutex_unlock(philo->right_f);
 				return ((void *)result);
 			}
-			pthread_mutex_lock(&philo->lock);
+			pthread_mutex_lock(&philo->tbl->mtx_time);
 			timestamp = curr_time() - philo->tbl->start_time;
-			pthread_mutex_unlock(&philo->lock);
+			pthread_mutex_unlock(&philo->tbl->mtx_time);
 			
 			pthread_mutex_lock(&philo->tbl->mtx_msg);
 			printf("%li %i has taken a fork\n", timestamp, philo->philo_id);
@@ -77,13 +79,10 @@ static void *routine(void *arg)
 				return ((void *)result);
 			}
 		}
-		pthread_mutex_lock(&philo->lock);
-		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->lock);
 		
-		pthread_mutex_lock(&philo->tbl->mtx_msg);
-		printf("%li %i has taken a fork\n", timestamp, philo->philo_id);
-		pthread_mutex_unlock(&philo->tbl->mtx_msg);
+		pthread_mutex_lock(&philo->tbl->mtx_time);
+		timestamp = curr_time() - philo->tbl->start_time;
+		pthread_mutex_unlock(&philo->tbl->mtx_time);
 
 		if (philo->tbl->dead == true || philo->tbl->all_full == true)
 		{
@@ -91,29 +90,49 @@ static void *routine(void *arg)
 			pthread_mutex_unlock(philo->right_f);
 			return ((void *)result);
 		}
-		pthread_mutex_lock(&philo->lock);
+		
+		pthread_mutex_lock(&philo->tbl->mtx_msg);
+		printf("%li %i has taken a fork\n", timestamp, philo->philo_id);
+		pthread_mutex_unlock(&philo->tbl->mtx_msg);
+		
+		pthread_mutex_lock(&philo->tbl->mtx_dead);
+		if (philo->tbl->dead == true || philo->tbl->all_full == true)
+		{
+			pthread_mutex_unlock(philo->left_f);
+			pthread_mutex_unlock(philo->right_f);
+			pthread_mutex_unlock(&philo->tbl->mtx_dead);
+			return ((void *)result);
+		}
+		pthread_mutex_unlock(&philo->tbl->mtx_dead);
+		
+		pthread_mutex_lock(&philo->tbl->mtx_time);
 		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->lock);
+		pthread_mutex_unlock(&philo->tbl->mtx_time);
 		
 		pthread_mutex_lock(&philo->tbl->mtx_msg);
 		philo->status = EATING;
 		printf("%li %i is eating\n", timestamp, philo->philo_id);
 		pthread_mutex_unlock(&philo->tbl->mtx_msg);
-		ft_usleep((philo->tbl->time_eat));
-		pthread_mutex_lock(&philo->lock);
+		
+		pthread_mutex_lock(&philo->tbl->mtx_time);
 		philo->time_last_meal = curr_time();
+		pthread_mutex_unlock(&philo->tbl->mtx_time);
+		
+		ft_usleep((philo->tbl->time_eat));
+		
+		pthread_mutex_lock(&philo->lock);
 		philo->amount_meal++;
 		pthread_mutex_unlock(&philo->lock);
 		
-		pthread_mutex_unlock(philo->left_f);
 		pthread_mutex_unlock(philo->right_f);
+		pthread_mutex_unlock(philo->left_f);
 		
 		if (philo->tbl->dead == true || philo->tbl->all_full == true)
 			return ((void *)result);
 		
-		pthread_mutex_lock(&philo->lock);
+		pthread_mutex_lock(&philo->tbl->mtx_time);
 		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->lock);
+		pthread_mutex_unlock(&philo->tbl->mtx_time);
 		
 		if (philo->tbl->all_full == true && philo->tbl->all_full == true)
 			return ((void *)result);
@@ -126,9 +145,9 @@ static void *routine(void *arg)
 		if (philo->tbl->dead == true)
 			return ((void *)result);
 		
-		pthread_mutex_lock(&philo->lock);
+		pthread_mutex_lock(&philo->tbl->mtx_time);
 		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->lock);
+		pthread_mutex_unlock(&philo->tbl->mtx_time);
 		
 		if (philo->tbl->all_full == true)
 			return ((void *)result);
@@ -137,6 +156,8 @@ static void *routine(void *arg)
 		philo->status = THINKING;
 		printf("%li %i is thinking\n", timestamp, philo->philo_id);
 		pthread_mutex_unlock(&philo->tbl->mtx_msg);
+		// newwww
+		usleep(500);
 		i++;
 	}
 	return ((void *)result);

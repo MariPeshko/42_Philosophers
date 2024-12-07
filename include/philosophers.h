@@ -67,7 +67,7 @@ struct s_table
 	unsigned long			time_eat;
 	unsigned long			time_sleep;
 	unsigned long	start_time;
-	pthread_mutex_t	mtx_create;
+	pthread_mutex_t	mtx_time;
 	pthread_mutex_t	mtx_dead;
 	pthread_mutex_t	mtx_msg;
 	pthread_mutex_t **f_mtxs;

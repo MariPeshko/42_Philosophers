@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 00:50:32 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/04 19:04:26 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 19:47:13 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	destroy_mtx(t_table *table)
 		table->f_mtxs[i] = NULL;
 		i++;
 	}
-	pthread_mutex_destroy(&table->mtx_create);
+	pthread_mutex_destroy(&table->mtx_time);
 	pthread_mutex_destroy(&table->mtx_dead);
 	pthread_mutex_destroy(&table->mtx_msg);
 	

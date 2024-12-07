@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:26:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 14:42:17 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 21:45:35 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	main(int argc, char **argv)
 		return (FAILURE);
 	if (analys_args(argv) == 1)
 		return (FAILURE);
-	//printf("test_00\n");
 	table = ft_new_calloc(1, sizeof(t_table));
 	if (table == NULL)
 		return (FAILURE);
