@@ -53,11 +53,11 @@ struct s_philo
 	pthread_t		thread_t;
 	int				philo_id;
 	pthread_mutex_t	lock;
-	// one more
 	pthread_mutex_t	*left_f;
 	pthread_mutex_t	*right_f;
 	t_status		status;
 	time_t			time_last_meal;
+	long			amount_meal;
 };
 
 struct s_table
@@ -72,10 +72,9 @@ struct s_table
 	pthread_mutex_t	mtx_msg;
 	pthread_mutex_t **f_mtxs;
 	struct s_philo	**philos;
-	// the simulation stops when a philosopher dies
 	bool			dead;
-	// long			max_meal; why?
-	// int			full_philo_n; what?
+	long			minimum_meal;
+	bool			all_full;
 	pthread_t		loop_thread;
 };
 

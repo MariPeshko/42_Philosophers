@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/04 22:29:00 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:32:23 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,8 @@ static int	pars_timing(char *str_time_to_do, long *timing)
 	time_to_do = ft_atoi(str_time_to_do);
 	if (time_to_do < 0)
 	{
-		printf("Please enter a positive number of time_to_do.\n");
+		printf("Please enter a positive number.\n");
 		return(1);
-	}
-	if (time_to_do == 0)
-	{
-		printf("time_to_do is 0. What am I doing?\n");
-		return(0);
 	}
 	*timing = time_to_do;
 	return (0);
@@ -65,10 +60,21 @@ int	init_table(char **argv, t_table *table)
 		return (1);
 	if (pars_timing(argv[4], &(table->time_sleep)) != 0)
 		return (1);
-	//if (ac == 6)
+	if (argv[5] && *argv[5])
+	{
+		if (pars_timing(argv[5], &(table->minimum_meal)) != 0)
+			return (1);
+		if (table->minimum_meal == 0)
+		{
+			printf("Philosophers have to eat 0 times.\n");
+			printf("Simulation wasn't inisialized.\n");
+			return (1);
+		}
+	}
+	printf("Minimum meal for each: %li\n", table->minimum_meal);
 	table->dead = false;
 	table->start_time = 0;
-	
+	table->all_full = false;
 	return (0);
 }
 

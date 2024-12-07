@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:47 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/04 22:17:06 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:24:06 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static int	init_forks(t_table *table)
 		philosoph->right_f = table->f_mtxs[i + 1];
     philosoph->status = THINKING;
 	philosoph->time_last_meal = 0;
+	philosoph->amount_meal = 0;
     return (0);
  }
 

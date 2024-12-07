@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 19:12:39 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/04 19:15:57 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:13:10 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	analys_args(char **argv)
 	if (arg_valid_check(argv[3], 3) == 1)
 		return (1);
 	if (arg_valid_check(argv[4], 4) == 1)
+		return (1);
+	if (arg_valid_check(argv[5], 5) == 1)
 		return (1);
 	return (0);
 }
