@@ -14,10 +14,8 @@
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-//unistd.h (for write) is included in libft.h
-# include "../libft/include/libft.h"
-# include "../libft/include/libft_bonus.h"
-
+// wrrite
+#include <unistd.h>
 // memset
 #include <stdlib.h>
 // printf
@@ -66,6 +64,7 @@ struct s_table
 	unsigned long			time_die;
 	unsigned long			time_eat;
 	unsigned long			time_sleep;
+	unsigned long			time_think;
 	unsigned long	start_time;
 	pthread_mutex_t	mtx_time;
 	pthread_mutex_t	mtx_dead;
@@ -78,28 +77,7 @@ struct s_table
 	pthread_t		loop_thread;
 };
 
-//to provide a standardized way to report and interpret error conditions
-# include <errno.h>
-//to be able to work with function waitpid
-# include <sys/wait.h>
-// to be able to work with function readline
-// we also have to include -lreadline to our Makefile
-// to consider readline while compiling
-# include <readline/history.h>
-# include <readline/readline.h>
-//to handle signals
-# include <signal.h>
-// to use struct sigaction
-# include <bits/sigaction.h>
-// function ioctl, macros TIOCSTI
-# include <sys/ioctl.h>
-//to change behaviour of the terminal (not-printing all control squences)
-# include <termios.h>
-// for S_ISDIR macro in is_valid_cmd_and_print_err function
-# include <sys/stat.h>
-//define error message
-# define INPUT_ERROR "Not correct number of input arguments\
-to execute minishell\n"
+
 
 //for testing reasons:
 //valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes 
@@ -127,7 +105,7 @@ int		all_full(t_table *table);
 //time.c
 int		ft_usleep(unsigned long time);
 unsigned long	curr_time();
-
+unsigned long	time_to_think(int t_nmb);
 //calloc.c
 void	*ft_new_calloc(size_t nmemb, size_t size);
 void	ft_new_putstr_fd(char *s, int fd);
@@ -136,5 +114,11 @@ void	print_tests(t_table *table);
 //cleanup.c
 void	destroy_mtx(t_table *table);
 void	free_philos(t_philo **philos, int total_nmb);
+//ft_isdigit.c
+int		ft_isdigit(int c);
+//ft_atoi.c
+int		ft_atoi(const char *str);
+//ft_putchar_fd.c
+void	ft_putchar_fd(char c, int fd);
 
 #endif

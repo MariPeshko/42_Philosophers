@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 18:22:42 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/08 18:56:11 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int	init_table(char **argv, t_table *table)
 		table->minimum_meal = 2147483647;
 	table->dead = false;
 	table->start_time = 0;
+	
+	table->time_think = time_to_think(table->total_nmb);
 	table->all_full = false;
 	return (0);
 }
-

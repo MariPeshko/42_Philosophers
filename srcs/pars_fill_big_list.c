@@ -6,13 +6,11 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:59:04 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 19:47:19 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/08 19:02:34 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-
 
 int	init_mtx(t_table *table)
 {

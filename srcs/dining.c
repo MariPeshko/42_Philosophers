@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 23:09:23 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/08 17:31:29 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,9 @@ static void *routine(void *arg)
 		printf("%li %i is thinking\n", timestamp, philo->philo_id);
 		pthread_mutex_unlock(&philo->tbl->mtx_msg);
 		// newwww
-		usleep(500);
+		usleep(philo->tbl->time_think);
+
+		//usleep(200);
 		i++;
 	}
 	return ((void *)result);

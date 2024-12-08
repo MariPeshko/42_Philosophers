@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchar_str.c                                 :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mstracke <mstracke@student.42berlin.d      +#+  +:+       +#+        */
+/*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 13:20:22 by mstracke          #+#    #+#             */
-/*   Updated: 2024/01/18 13:21:22 by mstracke         ###   ########.fr       */
+/*   Created: 2024/12/08 19:04:57 by mpeshko           #+#    #+#             */
+/*   Updated: 2024/12/08 19:04:57 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "philosophers.h"
 
-int	ft_printchar(va_list args)
+void	ft_putchar_fd(char c, int fd)
 {
-	char	help;
-
-	help = va_arg(args, int);
-	ft_putchar_fd(help, 1);
-	return (1);
+	write(fd, &c, 1);
 }

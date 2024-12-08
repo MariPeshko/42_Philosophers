@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: mpeshko <mpeshko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/08 00:55:48 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/06/07 20:09:52 by mpeshko          ###   ########.fr       */
+/*   Created: 2023/12/20 21:20:22 by mpeshko           #+#    #+#             */
+/*   Updated: 2024/06/13 16:13:36 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "philosophers.h"
 
-// Calculates and returns the number of nodes in a given linked list ‘lst’.
-int	ft_lstsize(t_list *lst)
+int	ft_isdigit(int c)
 {
-	int		i;
-	t_list	*tmp;
-
-	tmp = lst;
-	i = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
 }
