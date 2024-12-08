@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars.c                                             :+:      :+:    :+:   */
+/*   parsing_02.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 18:56:11 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:07:27 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static int	pars_num_of_phil(char *str_nmb_of_phil, int *int_from_big_struct)
 	if (phs < 0)
 	{
 		printf("Please enter a positive number of philosophers.\n");
-		return(1);
+		return (1);
 	}
 	if (phs == 0)
 	{
 		printf("The table is empty. Where are the philosophers?\n");
-		return(1);
+		return (1);
 	}
 	*int_from_big_struct = phs;
 	return (0);
@@ -39,11 +39,16 @@ static int	pars_timing(char *str_time_to_do, unsigned long *timing)
 	if (time_to_do < 0)
 	{
 		printf("Please enter a positive number.\n");
-		return(1);
+		return (1);
 	}
 	*timing = time_to_do;
 	return (0);
-	
+}
+
+static void	print_zero_meal(void)
+{
+	printf("Philosophers have to eat 0 times.\n");
+	printf("Simulation wasn't inisialized.\n");
 }
 
 /**
@@ -66,8 +71,7 @@ int	init_table(char **argv, t_table *table)
 			return (1);
 		if (table->minimum_meal == 0)
 		{
-			printf("Philosophers have to eat 0 times.\n");
-			printf("Simulation wasn't inisialized.\n");
+			print_zero_meal();
 			return (1);
 		}
 	}
@@ -75,7 +79,6 @@ int	init_table(char **argv, t_table *table)
 		table->minimum_meal = 2147483647;
 	table->dead = false;
 	table->start_time = 0;
-	
 	table->time_think = time_to_think(table->total_nmb);
 	table->all_full = false;
 	return (0);

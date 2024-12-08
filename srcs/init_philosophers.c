@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:47 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 23:07:48 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/08 22:09:11 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,16 @@ static int	init_forks(t_table *table)
 */
 int	init_philosophers(t_table *table)
 {
-    int	i;
+	int	i;
 	
 	i = 0;
 	table->philos = ft_new_calloc(table->total_nmb, sizeof(t_philo *));
-    if (init_forks(table) == 1)
+	if (init_forks(table) == 1)
 		return (FAILURE);
 	while(i < table->total_nmb)
 	{
 		table->philos[i] = ft_new_calloc(1,  sizeof(t_philo));
-        set_value_philos(table, table->philos[i], i);
+		set_value_philos(table, table->philos[i], i);
 		i++;
 	}
 	return (0);

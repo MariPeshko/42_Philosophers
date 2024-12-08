@@ -6,222 +6,28 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 17:31:29 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/08 21:56:08 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /**
- * Routine is neverending loop if every philosopher is alive.
- * If someone is dead, then bool dead is true, and this even break the circle.
+ * 1. Init start_time.
  * 
- * Even philosophers wait slightly to prevent contention.
-*/
-static void *routine(void *arg)
-{
-	int		i;
-	t_philo	*philo;
-	unsigned long	timestamp;
-
-	philo = (t_philo *)arg;
-	i = 0;
-	timestamp = 7777;
-	int *result = malloc(sizeof(int));
-	*result = philo->philo_id;
-	if (philo->philo_id % 2 == 0)
-		ft_usleep(5);
-	while (1)
-	{
-		if (philo->philo_id % 2 == 0)
-		{
-			pthread_mutex_lock(philo->left_f);
-			if (philo->tbl->dead == true || philo->tbl->all_full == true)
-			{
-				pthread_mutex_unlock(philo->left_f);
-				return ((void *)result);
-			}
-			pthread_mutex_lock(&philo->tbl->mtx_time);
-			timestamp = curr_time() - philo->tbl->start_time;
-			pthread_mutex_unlock(&philo->tbl->mtx_time);
-			
-			pthread_mutex_lock(&philo->tbl->mtx_msg);
-			printf("%li %i has taken a fork\n", timestamp, philo->philo_id);
-			pthread_mutex_unlock(&philo->tbl->mtx_msg);
-			pthread_mutex_lock(philo->right_f);
-			if (philo->tbl->dead == true || philo->tbl->all_full == true)
-			{
-				pthread_mutex_unlock(philo->left_f);
-				pthread_mutex_unlock(philo->right_f);
-				return ((void *)result);
-			}
-		}
-		else
-		{
-			pthread_mutex_lock(philo->right_f);
-			if (philo->tbl->dead == true || philo->tbl->all_full == true)
-			{
-				pthread_mutex_unlock(philo->right_f);
-				return ((void *)result);
-			}
-			pthread_mutex_lock(&philo->tbl->mtx_time);
-			timestamp = curr_time() - philo->tbl->start_time;
-			pthread_mutex_unlock(&philo->tbl->mtx_time);
-			
-			pthread_mutex_lock(&philo->tbl->mtx_msg);
-			printf("%li %i has taken a fork\n", timestamp, philo->philo_id);
-			pthread_mutex_unlock(&philo->tbl->mtx_msg);
-			pthread_mutex_lock(philo->left_f);
-			if (philo->tbl->dead == true || philo->tbl->all_full == true)
-			{
-				pthread_mutex_unlock(philo->left_f);
-				pthread_mutex_unlock(philo->right_f);
-				return ((void *)result);
-			}
-		}
-		
-		pthread_mutex_lock(&philo->tbl->mtx_time);
-		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->tbl->mtx_time);
-
-		if (philo->tbl->dead == true || philo->tbl->all_full == true)
-		{
-			pthread_mutex_unlock(philo->left_f);
-			pthread_mutex_unlock(philo->right_f);
-			return ((void *)result);
-		}
-		
-		pthread_mutex_lock(&philo->tbl->mtx_msg);
-		printf("%li %i has taken a fork\n", timestamp, philo->philo_id);
-		pthread_mutex_unlock(&philo->tbl->mtx_msg);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_dead);
-		if (philo->tbl->dead == true || philo->tbl->all_full == true)
-		{
-			pthread_mutex_unlock(philo->left_f);
-			pthread_mutex_unlock(philo->right_f);
-			pthread_mutex_unlock(&philo->tbl->mtx_dead);
-			return ((void *)result);
-		}
-		pthread_mutex_unlock(&philo->tbl->mtx_dead);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_time);
-		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->tbl->mtx_time);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_msg);
-		philo->status = EATING;
-		printf("%li %i is eating\n", timestamp, philo->philo_id);
-		pthread_mutex_unlock(&philo->tbl->mtx_msg);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_time);
-		philo->time_last_meal = curr_time();
-		pthread_mutex_unlock(&philo->tbl->mtx_time);
-		
-		ft_usleep((philo->tbl->time_eat));
-		
-		pthread_mutex_lock(&philo->lock);
-		philo->amount_meal++;
-		pthread_mutex_unlock(&philo->lock);
-		
-		pthread_mutex_unlock(philo->right_f);
-		pthread_mutex_unlock(philo->left_f);
-		
-		if (philo->tbl->dead == true || philo->tbl->all_full == true)
-			return ((void *)result);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_time);
-		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->tbl->mtx_time);
-		
-		if (philo->tbl->all_full == true && philo->tbl->all_full == true)
-			return ((void *)result);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_msg);
-		philo->status = SLEEPING;
-		printf("%li %i is sleeping\n", timestamp, philo->philo_id);
-		pthread_mutex_unlock(&philo->tbl->mtx_msg);
-		ft_usleep(philo->tbl->time_sleep);
-		if (philo->tbl->dead == true)
-			return ((void *)result);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_time);
-		timestamp = curr_time() - philo->tbl->start_time;
-		pthread_mutex_unlock(&philo->tbl->mtx_time);
-		
-		if (philo->tbl->all_full == true)
-			return ((void *)result);
-		
-		pthread_mutex_lock(&philo->tbl->mtx_msg);
-		philo->status = THINKING;
-		printf("%li %i is thinking\n", timestamp, philo->philo_id);
-		pthread_mutex_unlock(&philo->tbl->mtx_msg);
-		// newwww
-		usleep(philo->tbl->time_think);
-
-		//usleep(200);
-		i++;
-	}
-	return ((void *)result);
-}
-
-// printf("Monitor: all full\n");
-static void	*routine_loop(void *arg)
-{
-	t_table *table;
-	t_philo	**philosophers;
-	int		i;
-	int *result;
-	int x;
-
-	table = (t_table *)arg;
-	philosophers = table->philos;
-	i = 0;
-	x = 1001;
-	result = &x;
-	while (1)
-	{
-		usleep(100);
-		if (!all_full(table))
-			return ((void *)result);
-		i = 0;
-		while (i < table->total_nmb)
-		{
-			if (philosophers[i]->status != EATING)
-			{
-				if (is_dead_monitor(philosophers[i]) == 1)
-				{
-					pthread_mutex_lock(&table->mtx_dead);
-					table->dead = true;
-					pthread_mutex_unlock(&table->mtx_dead);
-					return ((void *)result);
-				}
-			}
-			i++;
-		}
-	}
-}
-
-/**
- * Init start_time.
- * 
-*/
-int start_dining(t_table *table)
+ * // if (res != NULL)
+ * // printf("Thread %d finished!\n", *(int *)res);
+ * // else if (res == NULL)
+ * // printf("res == NULL\n");
+ */
+int	start_dining(t_table *table)
 {
 	t_philo	*ph;
-    int		i;
+	int		i;
 
 	i = 0;
-	
-	table->start_time = curr_time();
-	while (i < table->total_nmb)
-	{
-		ph = table->philos[i];
-		ph->time_last_meal = table->start_time;
-		i++;
-	}
-	i = 0;
-	pthread_create(&table->loop_thread, NULL, &routine_loop, table);
+	set_start_time(table);
+	pthread_create(&table->monitor, NULL, &monitor, table);
 	if (table->total_nmb == 1)
 	{
 		ph = table->philos[i];
@@ -238,26 +44,88 @@ int start_dining(t_table *table)
 			i++;
 		}
 	}
-	
+	ft_wait(table);
+	return (SUCCESS);
+}
+
+void	set_start_time(t_table *tbl)
+{
+	t_philo	*ph;
+	int		i;
+
 	i = 0;
-	if (pthread_join(table->loop_thread, NULL) != 0)
-		return (-2);
-	while (i < table->total_nmb)
+	tbl->start_time = curr_time();
+	while (i < tbl->total_nmb)
 	{
-		ph = table->philos[i];
-		void *res;
+		ph = tbl->philos[i];
+		ph->time_last_meal = tbl->start_time;
+		i++;
+	}
+}
+
+// printf("Monitor: all full\n");
+void	*monitor(void *arg)
+{
+	t_table	*table;
+	int		*result;
+	int		x;
+
+	table = (t_table *)arg;
+	x = 1001;
+	result = &x;
+	while (1)
+	{
+		usleep(100);
+		if (!monitor_in_loop(table))
+			return ((void *)result);
+	}
+}
+
+int	monitor_in_loop(t_table *tbl)
+{
+	int		i;
+	t_philo	**philosophers;
+
+	i = 0;
+	philosophers = tbl->philos;
+	if (!all_full(tbl))
+		return (0);
+	while (i < tbl->total_nmb)
+	{
+		if (philosophers[i]->status != EATING)
+		{
+			if (is_dead_monitor(philosophers[i]) == 1)
+			{
+				pthread_mutex_lock(&tbl->mtx_dead);
+				tbl->dead = true;
+				pthread_mutex_unlock(&tbl->mtx_dead);
+				return (0);
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	ft_wait(t_table *tbl)
+{
+	t_philo	*ph;
+	int		i;
+	void	*res;
+
+	i = 0;
+	if (pthread_join(tbl->monitor, NULL) != 0)
+		return (-2);
+	while (i < tbl->total_nmb)
+	{
+		ph = tbl->philos[i];
 		if (pthread_join(ph->thread_t, &res) != 0)
 		{
 			printf("pthread_join returned not 0\n");
 			return (i + 1);
 		}
-		// if (res != NULL)
-		// 	printf("Thread %d finished!\n", *(int *)res);
-		// else if (res == NULL)
-		// 	printf("res == NULL\n");
 		i++;
 		free(res);
 	}
-	
-	return (SUCCESS);
+	return (0);
 }

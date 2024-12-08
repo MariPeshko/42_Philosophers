@@ -10,19 +10,19 @@ CFLAGS = -Wall -Wextra -Werror -g -Iinclude -Isrcs -pthread
 #VPATH = sources:include
 #INCLUDES = philosophers.h
 SRCS =	main.c \
-		analys_args.c \
-		check_nmb_argc.c \
-		pars.c \
-		pars_fill_big_list.c \
+		parsing_01.c \
+		parsing_02.c \
+		parsing_03_mtx.c \
 		init_philosophers.c \
 		dining.c \
+		routine.c \
 		routine_one.c \
 		is_dead.c \
 		all_full.c \
 		time.c \
-		debug.c \
+		msg.c \
 		cleanup.c \
-		calloc.c \
+		ft_calloc.c \
 		ft_atoi.c \
 		ft_isdigit.c \
 		ft_putchar_fd.c

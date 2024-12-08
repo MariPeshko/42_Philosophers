@@ -41,10 +41,12 @@ enum	e_status
 	EATING,
 	SLEEPING,
 	THINKING,
+	FORK,
 	DEAD,
 	DONE
 };
 
+// Do I need lock?
 struct s_philo
 {
 	t_table			*tbl;
@@ -74,51 +76,54 @@ struct s_table
 	bool			dead;
 	unsigned long			minimum_meal;
 	bool			all_full;
-	pthread_t		loop_thread;
+	pthread_t		monitor;
 };
 
-
-
-//for testing reasons:
-//valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes 
-//--track-fds=yes --suppressions=suppressions.supp ./minishell
-
-//check_nmb_argc.c
-int		check_number_arg(int argc);
-//analys_args.c
-int		analys_args(char **argv);
-//pars.c
-int		init_table(char **argv, t_table *table);
-//pars_fill_big_list.c
-int		init_mtx(t_table *table);
+//parsing_01.c
+int				check_number_arg(int argc);
+int				check_args(char **argv);
+//parsing_02.c
+int				init_table(char **argv, t_table *table);
+//parsing_03_mtx.c
+int				init_mtx(t_table *table);
 //init_philosophers.c
-int		init_philosophers(t_table *table);
+int				init_philosophers(t_table *table);
 //dining.c
-int		start_dining(t_table *table);
+int				start_dining(t_table *table);
+void			*monitor(void *arg);
+int				monitor_in_loop(t_table *tbl);
+void			set_start_time(t_table *tbl);
+int				ft_wait(t_table *tbl);
+//routine.c
+void			*routine(void *arg);
+int				ft_sleep(t_philo *philo);
+int				ft_think(t_philo *philo);
 //routine_one.c
-void	*routine_one(void *arg);
+void			*routine_one(void *arg);
 //is_dead.c
-int		is_dead(t_philo *philo);
-int		is_dead_monitor(t_philo *philo);
+int				dead_or_full(t_table *tbl);
+int				is_dead_monitor(t_philo *philo);
 //all_full.c
-int		all_full(t_table *table);
+int				all_full(t_table *table);
+//msg.c
+void			ft_msg(t_philo *philo, unsigned long time, t_status st);
 //time.c
-int		ft_usleep(unsigned long time);
+int				ft_usleep(unsigned long time);
 unsigned long	curr_time();
 unsigned long	time_to_think(int t_nmb);
-//calloc.c
-void	*ft_new_calloc(size_t nmemb, size_t size);
-void	ft_new_putstr_fd(char *s, int fd);
-//debug.c
-void	print_tests(t_table *table);
+unsigned long	ft_timestamp(t_table *tbl);
+unsigned long	ft_time_last_meal(t_table *tbl);
+//ft_calloc.c
+void			*ft_new_calloc(size_t nmemb, size_t size);
+void			ft_new_putstr_fd(char *s, int fd);
 //cleanup.c
-void	destroy_mtx(t_table *table);
-void	free_philos(t_philo **philos, int total_nmb);
+void			destroy_mtx(t_table *table);
+void			free_philos(t_philo **philos, int total_nmb);
 //ft_isdigit.c
-int		ft_isdigit(int c);
+int				ft_isdigit(int c);
 //ft_atoi.c
-int		ft_atoi(const char *str);
+int				ft_atoi(const char *str);
 //ft_putchar_fd.c
-void	ft_putchar_fd(char c, int fd);
+void		ft_putchar_fd(char c, int fd);
 
 #endif
