@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 21:56:08 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/09 16:09:22 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,21 @@ void	*monitor(void *arg)
 	}
 }
 
+static int	phil_eat (t_philo *philo)
+{
+	pthread_mutex_lock(&philo->state_lock);
+	if (philo->status != EATING)
+	{
+		pthread_mutex_unlock(&philo->state_lock);
+		return (0);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->state_lock);
+		return (1);
+	}
+}
+
 int	monitor_in_loop(t_table *tbl)
 {
 	int		i;
@@ -90,13 +105,13 @@ int	monitor_in_loop(t_table *tbl)
 	philosophers = tbl->philos;
 	if (!all_full(tbl))
 		return (0);
+	pthread_mutex_lock(&tbl->mtx_dead);
 	while (i < tbl->total_nmb)
 	{
-		if (philosophers[i]->status != EATING)
+		if(!phil_eat(philosophers[i]))
 		{
 			if (is_dead_monitor(philosophers[i]) == 1)
 			{
-				pthread_mutex_lock(&tbl->mtx_dead);
 				tbl->dead = true;
 				pthread_mutex_unlock(&tbl->mtx_dead);
 				return (0);
@@ -104,6 +119,7 @@ int	monitor_in_loop(t_table *tbl)
 		}
 		i++;
 	}
+	pthread_mutex_unlock(&tbl->mtx_dead);
 	return (1);
 }
 

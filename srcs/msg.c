@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 19:58:20 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 21:27:37 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/09 16:12:35 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_msg(t_philo *philo, unsigned long time, t_status st)
 {
 	pthread_mutex_lock(&philo->tbl->mtx_msg);
+	pthread_mutex_lock(&philo->state_lock);
 	if (st == EATING)
 	{
 		philo->status = EATING;
@@ -37,5 +38,6 @@ void	ft_msg(t_philo *philo, unsigned long time, t_status st)
 	}
 	if (st == DEAD)
 		printf("%li %i died\n", time, philo->philo_id);
+	pthread_mutex_unlock(&philo->state_lock);
 	pthread_mutex_unlock(&philo->tbl->mtx_msg);
 }

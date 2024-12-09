@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 00:50:32 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 19:47:13 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/09 15:54:18 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,17 @@
 
 void	free_philos(t_philo **philos, int total_nmb)
 {
-	int	i;
+	int		i;
 	t_philo	*ph;
 
+	i = 0;
+	while (i < total_nmb)
+	{
+		ph = philos[i];
+		pthread_mutex_destroy(&ph->state_lock);
+		pthread_mutex_destroy(&ph->time_lock);
+		i++;
+	}
 	i = 0;
 	while (i < total_nmb)
 	{
@@ -30,11 +38,10 @@ void	free_philos(t_philo **philos, int total_nmb)
 
 void	destroy_mtx(t_table *table)
 {
-	//destroy_philo_mtx();
 	int	i;
-	
+
 	i = 0;
-	while(i < table->total_nmb)
+	while (i < table->total_nmb)
 	{
 		pthread_mutex_destroy(table->f_mtxs[i]);
 		free(table->f_mtxs[i]);
@@ -44,7 +51,6 @@ void	destroy_mtx(t_table *table)
 	pthread_mutex_destroy(&table->mtx_time);
 	pthread_mutex_destroy(&table->mtx_dead);
 	pthread_mutex_destroy(&table->mtx_msg);
-	
 	free(table->f_mtxs);
 	table->dead = NULL;
 }

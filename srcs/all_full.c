@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:15:28 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/07 18:24:02 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/09 15:39:11 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 int	all_full(t_table *table)
 {
-	int		i;
-	t_philo *ph;
+	int				i;
+	t_philo			*ph;
 	unsigned long	philo_meal_n;
-	
 
 	i = 0;
 	ph = table->philos[i];
 	pthread_mutex_lock(&table->mtx_dead);
 	while (i < table->total_nmb)
 	{
+		
 		ph = table->philos[i];
-		pthread_mutex_lock(&ph->lock);
+		pthread_mutex_lock(&ph->state_lock);
 		philo_meal_n = ph->amount_meal;
-		pthread_mutex_unlock(&ph->lock);
+		pthread_mutex_unlock(&ph->state_lock);
 		if (philo_meal_n >= table->minimum_meal)
 			i++;
 		else

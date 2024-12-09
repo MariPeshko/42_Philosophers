@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   routine_01.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 19:29:27 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 21:58:25 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/09 15:38:46 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,84 +20,67 @@
 */
 void	*routine(void *arg)
 {
-	int		i;
 	t_philo	*philo;
-	unsigned long	timestamp;
+	int		*result;
 
 	philo = (t_philo *)arg;
-	i = 0;
-	timestamp = 7777;
-	int *result = malloc(sizeof(int));
+	result = malloc(sizeof(int));
 	*result = philo->philo_id;
 	if (philo->philo_id % 2 == 0)
 		ft_usleep(5);
 	while (1)
 	{
-		if (philo->philo_id % 2 == 0)
-		{
-			pthread_mutex_lock(philo->left_f);
-			if (!dead_or_full(philo->tbl))
-			{
-				pthread_mutex_unlock(philo->left_f);
-				return ((void *)result);
-			}
-			timestamp = ft_timestamp(philo->tbl);
-			ft_msg(philo, timestamp, FORK);
-			pthread_mutex_lock(philo->right_f);
-			if (!dead_or_full(philo->tbl))
-			{
-				pthread_mutex_unlock(philo->left_f);
-				pthread_mutex_unlock(philo->right_f);
-				return ((void *)result);
-			}
-		}
-		else
-		{
-			pthread_mutex_lock(philo->right_f);
-			if (!dead_or_full(philo->tbl))
-			{
-				pthread_mutex_unlock(philo->right_f);
-				return ((void *)result);
-			}
-			timestamp = ft_timestamp(philo->tbl);
-			ft_msg(philo, timestamp, FORK);
-			pthread_mutex_lock(philo->left_f);
-			if (!dead_or_full(philo->tbl))
-			{
-				pthread_mutex_unlock(philo->left_f);
-				pthread_mutex_unlock(philo->right_f);
-				return ((void *)result);
-			}
-		}
-		timestamp = ft_timestamp(philo->tbl);
-		if (!dead_or_full(philo->tbl))
-		{
-			pthread_mutex_unlock(philo->left_f);
-			pthread_mutex_unlock(philo->right_f);
+		if (!ft_fork(philo))
 			return ((void *)result);
-		}
-		ft_msg(philo, timestamp, FORK);
-		if (!dead_or_full(philo->tbl))
-		{
-			pthread_mutex_unlock(philo->left_f);
-			pthread_mutex_unlock(philo->right_f);
+		if (!ft_eat(philo))
 			return ((void *)result);
-		}
-		
-		timestamp = ft_timestamp(philo->tbl);
-        ft_msg(philo, timestamp, EATING);
-		philo->time_last_meal = ft_time_last_meal(philo->tbl);
-		ft_usleep((philo->tbl->time_eat));
-		philo->amount_meal++;
-		pthread_mutex_unlock(philo->right_f);
-		pthread_mutex_unlock(philo->left_f);
-		
-		if(!ft_sleep(philo))
+		if (!ft_sleep(philo))
 			return ((void *)result);
-		if(!ft_think(philo))
+		if (!ft_think(philo))
 			return ((void *)result);
-		i++;
 	}
+}
+
+int	ft_fork(t_philo *philo)
+{
+	if (philo->philo_id % 2 == 0)
+	{
+		if (!routine_even(philo))
+			return (0);
+	}
+	else
+	{
+		if (!routine_odd(philo))
+			return (0);
+	}
+	if (!ft_msg_second_fork(philo))
+		return (0);
+	return (1);
+}
+
+int	ft_eat(t_philo *philo)
+{
+	unsigned long	timestamp;
+
+	timestamp = 10000;
+	timestamp = ft_timestamp(philo->tbl);
+	if (!dead_or_full(philo->tbl))
+	{
+		pthread_mutex_unlock(philo->left_f);
+		pthread_mutex_unlock(philo->right_f);
+		return (0);
+	}
+	ft_msg(philo, timestamp, EATING);
+	pthread_mutex_lock(&philo->state_lock);
+	philo->time_last_meal = ft_time_last_meal(philo->tbl);
+	pthread_mutex_unlock(&philo->state_lock);
+	ft_usleep((philo->tbl->time_eat));
+	pthread_mutex_lock(&philo->state_lock);
+	philo->amount_meal++;
+	pthread_mutex_unlock(&philo->state_lock);
+	pthread_mutex_unlock(philo->right_f);
+	pthread_mutex_unlock(philo->left_f);
+	return (1);
 }
 
 int	ft_sleep(t_philo *philo)

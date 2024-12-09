@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:47 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 22:09:11 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/09 15:53:55 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 */
 static int	init_forks(t_table *table)
 {
-	pthread_mutex_t **mutex_array;
-	int	i;
-	
+	pthread_mutex_t	**mutex_array;
+	int				i;
+
 	i = 0;
 	mutex_array = ft_new_calloc(table->total_nmb, sizeof(pthread_mutex_t *));
 	if (!mutex_array)
@@ -38,7 +38,7 @@ static int	init_forks(t_table *table)
 		printf("malloc error\n");
 		return (1);
 	}
-	while(i < table->total_nmb)
+	while (i < table->total_nmb)
 	{
 		mutex_array[i] = ft_new_calloc(1, sizeof(pthread_mutex_t));
 		if (pthread_mutex_init(mutex_array[i], NULL) != 0)
@@ -64,15 +64,10 @@ static int	init_forks(t_table *table)
  * @param tbl - a pointer to a struct table
  * @param philo_id - each philosoph has it's own id number (from 1 to n)
 */
- static int    set_value_philos(t_table *table, t_philo *philosoph, int i)
- {
-    philosoph->tbl = table;
-    philosoph->philo_id = i + 1;
-	if (pthread_mutex_init(&philosoph->lock, NULL) != 0)
-	{
-		write(2, "mutex init failed", 17);
-		return (1);
-	}
+static int	set_value_philos(t_table *table, t_philo *philosoph, int i)
+{
+	philosoph->tbl = table;
+	philosoph->philo_id = i + 1;
 	philosoph->left_f = table->f_mtxs[i];
 	if (philosoph->philo_id == table->total_nmb)
 	{
@@ -82,11 +77,21 @@ static int	init_forks(t_table *table)
 	{
 		philosoph->right_f = table->f_mtxs[i + 1];
 	}
-    philosoph->status = THINKING;
+	if (pthread_mutex_init(&philosoph->state_lock, NULL) != 0)
+	{
+		write(2, "mutex init failed", 17);
+		return (FAILURE);
+	}
+	if (pthread_mutex_init(&philosoph->time_lock, NULL) != 0)
+	{
+		write(2, "mutex init failed", 17);
+		return (FAILURE);
+	}
+	philosoph->status = THINKING;
 	philosoph->time_last_meal = 0;
 	philosoph->amount_meal = 0;
-    return (0);
- }
+	return (0);
+}
 
 /**
  * Initialization "total_nmb" of philosophers which represented by
@@ -100,14 +105,14 @@ static int	init_forks(t_table *table)
 int	init_philosophers(t_table *table)
 {
 	int	i;
-	
+
 	i = 0;
 	table->philos = ft_new_calloc(table->total_nmb, sizeof(t_philo *));
 	if (init_forks(table) == 1)
 		return (FAILURE);
-	while(i < table->total_nmb)
+	while (i < table->total_nmb)
 	{
-		table->philos[i] = ft_new_calloc(1,  sizeof(t_philo));
+		table->philos[i] = ft_new_calloc(1, sizeof(t_philo));
 		set_value_philos(table, table->philos[i], i);
 		i++;
 	}
