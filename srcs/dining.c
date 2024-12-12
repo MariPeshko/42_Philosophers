@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/09 16:09:22 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:45:11 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	monitor_in_loop(t_table *tbl)
 		{
 			if (is_dead_monitor(philosophers[i]) == 1)
 			{
-				tbl->dead = true;
 				pthread_mutex_unlock(&tbl->mtx_dead);
 				return (0);
 			}

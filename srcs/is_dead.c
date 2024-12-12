@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:48:56 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/09 15:42:12 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:45:10 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ int	is_dead_monitor(t_philo *philo)
 	pthread_mutex_unlock(&philo->state_lock);
 	if (diff >= philo->tbl->time_die || philo->tbl->time_die == 0)
 	{
-		//pthread_mutex_lock(&philo->tbl->mtx_dead);
 		philo->tbl->dead = true;
 		timestamp = curr_time() - philo->tbl->start_time;
 		ft_msg(philo, timestamp, DEAD);
-		//pthread_mutex_unlock(&philo->tbl->mtx_dead);
 		return (1);
 	}
 	else
