@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/12 16:45:11 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:30:31 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	start_dining(t_table *table)
 	if (table->total_nmb == 1)
 	{
 		ph = table->philos[i];
-		if (pthread_create(&ph->thread_t, NULL, &routine_one, ph) != 0) 
+		if (pthread_create(&ph->thread_t, NULL, &routine_one, ph) != 0)
 			return (-1);
 	}
 	else if (table->total_nmb > 1)
@@ -39,7 +39,7 @@ int	start_dining(t_table *table)
 		while (i < table->total_nmb)
 		{
 			ph = table->philos[i];
-			if (pthread_create(&ph->thread_t, NULL, &routine, ph) != 0) 
+			if (pthread_create(&ph->thread_t, NULL, &routine, ph) != 0)
 				return (i * -1);
 			i++;
 		}
@@ -61,65 +61,6 @@ void	set_start_time(t_table *tbl)
 		ph->time_last_meal = tbl->start_time;
 		i++;
 	}
-}
-
-// printf("Monitor: all full\n");
-void	*monitor(void *arg)
-{
-	t_table	*table;
-	int		*result;
-	int		x;
-
-	table = (t_table *)arg;
-	x = 1001;
-	result = &x;
-	while (1)
-	{
-		usleep(100);
-		if (!monitor_in_loop(table))
-			return ((void *)result);
-	}
-}
-
-static int	phil_eat (t_philo *philo)
-{
-	pthread_mutex_lock(&philo->state_lock);
-	if (philo->status != EATING)
-	{
-		pthread_mutex_unlock(&philo->state_lock);
-		return (0);
-	}
-	else
-	{
-		pthread_mutex_unlock(&philo->state_lock);
-		return (1);
-	}
-}
-
-int	monitor_in_loop(t_table *tbl)
-{
-	int		i;
-	t_philo	**philosophers;
-
-	i = 0;
-	philosophers = tbl->philos;
-	if (!all_full(tbl))
-		return (0);
-	pthread_mutex_lock(&tbl->mtx_dead);
-	while (i < tbl->total_nmb)
-	{
-		if(!phil_eat(philosophers[i]))
-		{
-			if (is_dead_monitor(philosophers[i]) == 1)
-			{
-				pthread_mutex_unlock(&tbl->mtx_dead);
-				return (0);
-			}
-		}
-		i++;
-	}
-	pthread_mutex_unlock(&tbl->mtx_dead);
-	return (1);
 }
 
 int	ft_wait(t_table *tbl)

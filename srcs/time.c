@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:53:08 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 21:57:14 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:42:19 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ unsigned long	time_to_think(int t_nmb)
 	rtrn = 0;
 	if (t_nmb > 1 && (t_nmb % 2 != 0))
 	{
-		rtrn = 500;
+		rtrn = 600;
 		return (rtrn);
 	}
 	else

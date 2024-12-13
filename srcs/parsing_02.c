@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/09 14:05:25 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:29:59 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	check_number_arg(int argc)
 		if (argc > 6)
 			printf("[Error] Oops!.. Too many arguments.\n");
 		printf("The program input:\n");
-		printf("   ./philosophers\n   [number_of_philosophers]\n");
+		printf("   ./philo\n   [number_of_philosophers]\n");
 		printf("   [time_to_die]\n   [time_to_eat]\n");
 		printf("   [time_to_sleep]\n");
 		printf("   [number_of_times_each_philosopher_must_eat] ");

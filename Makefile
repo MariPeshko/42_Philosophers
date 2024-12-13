@@ -15,6 +15,7 @@ SRCS =	main.c \
 		parsing_03_mtx.c \
 		init_philosophers.c \
 		dining.c \
+		dining_monitor.c \
 		routine_01.c \
 		routine_02.c \
 		routine_one_phil.c \

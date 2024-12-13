@@ -90,10 +90,11 @@ int				init_mtx(t_table *table);
 int				init_philosophers(t_table *table);
 //dining.c
 int				start_dining(t_table *table);
-void			*monitor(void *arg);
-int				monitor_in_loop(t_table *tbl);
 void			set_start_time(t_table *tbl);
 int				ft_wait(t_table *tbl);
+//dining_monitor.c
+void			*monitor(void *arg);
+int				monitor_in_loop(t_table *tbl);
 //routine_01.c
 void			*routine(void *arg);
 int				ft_fork(t_philo *philo);

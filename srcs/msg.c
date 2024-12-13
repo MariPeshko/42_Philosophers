@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 19:58:20 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/09 16:12:35 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:21:42 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_msg(t_philo *philo, unsigned long time, t_status st)
 	}
 	if (st == THINKING)
 	{
-		philo->status = THINKING;
 		printf("%li %i is thinking\n", time, philo->philo_id);
 	}
 	if (st == DEAD)
