@@ -7,13 +7,13 @@
 42Berlin school project created by Maryna Peshko (mpeshko) in November of 2024. Studying the basics of multithreading. More details in the topic "Philosophers.subject.pdf"
 
 ### The program input:
-*   `./philo
-<br />   [number_of_philosophers]
-<br />   [time_to_die]
-<br />   [time_to_eat]
-<br />   [time_to_sleep]
-<br />   (optional argument)
-<br />   [number_of_times_each_philosopher_must_eat]`
+`./philo`
+<br />`   [number_of_philosophers]`
+<br />`   [time_to_die]`
+<br />`   [time_to_eat]`
+<br />`   [time_to_sleep]`
+<br />`   (optional argument)`
+<br />`   [number_of_times_each_philosopher_must_eat]`
 
 ### Examples
 
