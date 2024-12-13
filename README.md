@@ -1,8 +1,8 @@
 
 # 42_Philosophers
 
- ![Quote]The unexamined life is not worth living.
- — Socrates
+"The unexamined life is not worth living."
+                                — Socrates
 
 42Berlin school project created by Maryna Peshko (mpeshko) in November of 2024. Studying the basics of multithreading. More details in the topic "Philosophers.subject.pdf"
 
@@ -17,21 +17,21 @@
 
 ### Examples
 
-Philosopher should not eat and should die.
+>Philosopher should not eat and should die.
 `./philo 1 800 200 200`
-No Philosopher should die.
+>No Philosopher should die.
 `./philo 5 800 200 200`
-No Philosopher should die and the simulation should stop when every philosopher has eaten at least 7 times.
+>No Philosopher should die and the simulation should stop when every philosopher has eaten at least 7 times.
 `./philo 5 800 200 200 3`
-No Philosopher should die.
+>No Philosopher should die.
 `./philo 4 410 200 200`
-One Philosopher should die.
+>One Philosopher should die.
 `./philo 4 299 200 100`
-One Philosopher should die.
+>One Philosopher should die.
 `./philo 10 299 2000 100`
-No one should die
+>No one should die
 `./philo 10 299 2000 100`
-Parsing tests
+>Parsing tests
 `./philo 2 "" "" ""`
 `./philo -2 100 100 100`
 `./philo f 100 100 100`
@@ -44,5 +44,5 @@ Parsing tests
 `nm -u ./philo`
 
 (c) Maryna Peshko
-https://www.linkedin.com/in/maryna-peshko/
-email: marunapeshko@gmail.com
+>https://www.linkedin.com/in/maryna-peshko/
+>email: marunapeshko@gmail.com
