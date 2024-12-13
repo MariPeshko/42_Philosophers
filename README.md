@@ -20,21 +20,21 @@
 Philosopher should not eat and should die.
 <br />`./philo 1 800 200 200`
 No Philosopher should die.
--`./philo 5 800 200 200`
+<br />`./philo 5 800 200 200`
 No Philosopher should die and the simulation should stop when every philosopher has eaten at least 7 times.
--`./philo 5 800 200 200 3`
+<br />`./philo 5 800 200 200 3`
 No Philosopher should die.
--`./philo 4 410 200 200`
+<br />`./philo 4 410 200 200`
 One Philosopher should die.
--`./philo 4 299 200 100`
+<br />`./philo 4 299 200 100`
 One Philosopher should die.
--`./philo 10 299 2000 100`
+<br />`./philo 10 299 2000 100`
 No one should die
--`./philo 10 299 2000 100`
+<br />`./philo 10 299 2000 100`
 Parsing tests
--`./philo 2 "" "" ""`
--`./philo -2 100 100 100`
--`./philo f 100 100 100`
+<br />`./philo 2 "" "" ""`
+<br />`./philo -2 100 100 100`
+<br />`./philo f 100 100 100`
 
 ### How to check for data races 
 `valgrind --tool=helgrind`
@@ -43,6 +43,6 @@ Parsing tests
 
 `nm -u ./philo`
 
--(c) Maryna Peshko
--https://www.linkedin.com/in/maryna-peshko/
--email: marunapeshko@gmail.com
+<br />(c) Maryna Peshko
+<br />https://www.linkedin.com/in/maryna-peshko/
+<br />email: marunapeshko@gmail.com
