@@ -2,7 +2,7 @@
 # 42_Philosophers
 
 ## "The unexamined life is not worth living."
-*                             **— Socrates**
+**                                — Socrates**
 
 42Berlin school project created by Maryna Peshko (mpeshko) in November of 2024. Studying the basics of multithreading. More details in the topic "Philosophers.subject.pdf"
 
