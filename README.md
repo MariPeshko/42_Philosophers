@@ -18,7 +18,7 @@
 ### Examples
 
 Philosopher should not eat and should die.
--`./philo 1 800 200 200`
+<br />`./philo 1 800 200 200`
 No Philosopher should die.
 -`./philo 5 800 200 200`
 No Philosopher should die and the simulation should stop when every philosopher has eaten at least 7 times.
