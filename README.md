@@ -1,6 +1,10 @@
+
 # 42_Philosophers
 
-The project of 42Berlin school made by Maryna Peshko (mpeshko) in November of 2024 year. Learning the basics of multi-threading. Read more in subject "Philosophers.subject.pdf"
+ ![Quote]The unexamined life is not worth living.
+ — Socrates
+
+42Berlin school project created by Maryna Peshko (mpeshko) in November of 2024. Studying the basics of multithreading. More details in the topic "Philosophers.subject.pdf"
 
 ### The program input:
    `./philo
@@ -38,3 +42,7 @@ Parsing tests
 ### How to check used function
 
 `nm -u ./philo`
+
+(c) Maryna Peshko
+https://www.linkedin.com/in/maryna-peshko/
+email: marunapeshko@gmail.com
