@@ -13,13 +13,11 @@ The two most important functions to understand a logic:
 * `int	ft_fork(t_philo *philo)`
 * `int	ft_think(t_philo *philo)`
 
-<br />In routine() all even philosophers start later than all odd ones.<br />
-<br />
+<br />In routine() all even philosophers start later than all odd ones.
 ```
 if (philo->philo_id % 2 == 0)
 		ft_usleep(5);
 ```
-
 <br />`ft_fork()` has diferrent logic in taking forks for even and odd philosophers.
 <br />`ft_think()`  is used to delay a philosopher before he takes a fork, so that he doesn't get there early and steal it from another philosopher who waited longer. This prevents some philosopher from waiting too long for his fork and dying.
 
@@ -31,7 +29,7 @@ if (philo->philo_id % 2 == 0)
 <br />`   [time_to_sleep]`
 <br />`   _(optional argument)`_
 <br />`   [number_of_times_each_philosopher_must_eat]`
-<br />  <br /> According to the subject, all tests are limited to 200 philosophers, and the minimum time is 50 ms.
+<br />  <br /> According to the subject, all tests are limited to 200 philosophers, and the minimum time is 60 ms.
 
 ### Examples
 
@@ -69,7 +67,7 @@ Parsing tests
 `nm -u ./philo`
 
 ### Contacts
-<br />https://www.linkedin.com/in/maryna-peshko/
+https://www.linkedin.com/in/maryna-peshko/
 <br />email: marunapeshko@gmail.com
 
 (c) Maryna Peshko
