@@ -121,7 +121,7 @@ unsigned long	time_to_think(int t_nmb);
 unsigned long	ft_timestamp(t_table *tbl);
 unsigned long	ft_time_last_meal(t_table *tbl);
 //ft_calloc.c
-void			*ft_new_calloc(size_t nmemb, size_t size);
+void			*ft_calloc(size_t nmemb, size_t size);
 void			ft_new_putstr_fd(char *s, int fd);
 //cleanup.c
 void			destroy_mtx(t_table *table);

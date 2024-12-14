@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:48:56 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/12 16:45:10 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:20:46 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,13 @@ int	dead_or_full(t_table *tbl)
 	}
 }
 
-//  printf("%li %i %li ms without meal monitor\n", curr_time(), 
-// 	philo->philo_id, diff);
 int	is_dead_monitor(t_philo *philo)
 {
 	unsigned long	diff;
 	unsigned long	timestamp;
 
 	diff = 0;
-	timestamp = 6666;
+	timestamp = 2000;
 	if (philo->tbl->dead == true)
 		return (0);
 	pthread_mutex_lock(&philo->state_lock);

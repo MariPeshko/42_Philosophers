@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 21:53:08 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/13 18:42:19 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:23:29 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ unsigned long	curr_time(void)
 	return (value);
 }
 
+/**
+ * I made this function because the usleep() function sometimes delays 
+ * longer than the specified time, and philosophers are 1 ms, 2 ms or even
+ * more milliseconds behind.
+*/
 int	ft_usleep(unsigned long time)
 {
 	unsigned long	start;

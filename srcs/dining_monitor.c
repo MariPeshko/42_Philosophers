@@ -6,12 +6,18 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:24:36 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/13 18:30:27 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:20:23 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/**
+ * /**
+ * The monitor is a separate thread that constantly (in a loop) checks whether 
+ * any of the philosophers died and whether all philosophers have eaten 
+ * enough times (an optional program argument).
+*/
 static int	phil_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->state_lock);
@@ -27,7 +33,6 @@ static int	phil_eat(t_philo *philo)
 	}
 }
 
-// printf("Monitor: all full\n");
 void	*monitor(void *arg)
 {
 	t_table	*table;
@@ -35,7 +40,7 @@ void	*monitor(void *arg)
 	int		x;
 
 	table = (t_table *)arg;
-	x = 1001;
+	x = 1000;
 	result = &x;
 	while (1)
 	{
@@ -45,6 +50,11 @@ void	*monitor(void *arg)
 	}
 }
 
+/**
+ * `phil_eat` is used to check if a philosopher has EATING status,
+ * if yes, then we don't need to run `is_dead_monitor` for it, and
+ * we check next philosopher.
+*/
 int	monitor_in_loop(t_table *tbl)
 {
 	int		i;

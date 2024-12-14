@@ -6,13 +6,13 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 15:19:15 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/08 22:10:11 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 00:55:06 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*ft_new_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*r;
 

@@ -6,7 +6,7 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:34:14 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/13 18:29:59 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 00:56:59 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static void	print_zero_meal(void)
 
 /**
  * Initialization of total number of philosophers, timing
- * for eating, dying, sleeping, and setting dead bool to false.
+ * for eating, dying, sleeping, thinking (if needed) and setting 
+ * dead bool to false.
 */
 int	init_table(char **argv, t_table *table)
 {

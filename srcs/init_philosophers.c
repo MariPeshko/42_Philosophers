@@ -6,16 +6,15 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:47 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/09 15:53:55 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:08:41 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// tip:
-// int pthread_mutex_init(pthread_mutex_t *restrict mutex,
-// const pthread_mutexattr_t *restrict attr);
 /**
+ * Each mutex is an abstract fork that a philosopher (thread) can take to eat.
+ * 
  * If the number of mutexes is dynamic or only known at runtime, allocating 
  * memory for pthread_mutex_t variables dynamically is a good practice.
  * 
@@ -32,7 +31,7 @@ static int	init_forks(t_table *table)
 	int				i;
 
 	i = 0;
-	mutex_array = ft_new_calloc(table->total_nmb, sizeof(pthread_mutex_t *));
+	mutex_array = ft_calloc(table->total_nmb, sizeof(pthread_mutex_t *));
 	if (!mutex_array)
 	{
 		printf("malloc error\n");
@@ -40,7 +39,7 @@ static int	init_forks(t_table *table)
 	}
 	while (i < table->total_nmb)
 	{
-		mutex_array[i] = ft_new_calloc(1, sizeof(pthread_mutex_t));
+		mutex_array[i] = ft_calloc(1, sizeof(pthread_mutex_t));
 		if (pthread_mutex_init(mutex_array[i], NULL) != 0)
 		{
 			write(2, "mutex init failed", 17);
@@ -55,7 +54,7 @@ static int	init_forks(t_table *table)
 /**
  * 1. A pointer to a struct table is assigned to "tbl".
  * 2. ID is assign to philo_id variable.
- * 3. Initialization of mutex for ...
+ * 3. Initialization of mutex for state_lock and time_lock.
  * 4. Assigning a pointer to the left and right forks, which are represented
  *  by mutexes. Last philosopher wraps around.
  * 
@@ -96,23 +95,23 @@ static int	set_value_philos(t_table *table, t_philo *philosoph, int i)
 /**
  * Initialization "total_nmb" of philosophers which represented by
  * struct s_philo.
- * 1. First: allocate memory for the array of pointers.
+ * 1. Allocate memory for the array of pointers.
  * Each element of this array will point to an array of structs.
  * 2. Assigning values for each philosopher.
  * 
- * @param philos is a pointer to a pointer
+ * @param philos is a pointer to a pointer.
 */
 int	init_philosophers(t_table *table)
 {
 	int	i;
 
 	i = 0;
-	table->philos = ft_new_calloc(table->total_nmb, sizeof(t_philo *));
+	table->philos = ft_calloc(table->total_nmb, sizeof(t_philo *));
 	if (init_forks(table) == 1)
 		return (FAILURE);
 	while (i < table->total_nmb)
 	{
-		table->philos[i] = ft_new_calloc(1, sizeof(t_philo));
+		table->philos[i] = ft_calloc(1, sizeof(t_philo));
 		set_value_philos(table, table->philos[i], i);
 		i++;
 	}

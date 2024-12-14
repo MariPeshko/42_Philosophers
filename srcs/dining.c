@@ -6,19 +6,21 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 15:02:54 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/13 18:30:31 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:14:54 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /**
- * 1. Init start_time.
+ * All the magic starts here!
  * 
- * // if (res != NULL)
- * // printf("Thread %d finished!\n", *(int *)res);
- * // else if (res == NULL)
- * // printf("res == NULL\n");
+ * The monitor is a separate thread that constantly (in a loop) checks whether 
+ * any of the philosophers died and whether all philosophers have eaten 
+ * enough times (an optional program argument).
+ * 
+ * `routine_one` - for case when there is only one philosopher.
+ * `routine` - two and more philosophers.
  */
 int	start_dining(t_table *table)
 {
@@ -62,7 +64,15 @@ void	set_start_time(t_table *tbl)
 		i++;
 	}
 }
-
+/**
+ * Threads when finished return their own id number and pthread_join() gets
+ * this number. It's a draft for check it. We don't need it for the program's
+ * purpose. It's just my styding notes.
+ * // if (res != NULL)
+ * // printf("Thread %d finished!\n", *(int *)res);
+ * // else if (res == NULL)
+ * // printf("res == NULL\n");
+ */
 int	ft_wait(t_table *tbl)
 {
 	t_philo	*ph;
