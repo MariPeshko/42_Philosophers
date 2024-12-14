@@ -6,14 +6,13 @@
 /*   By: mpeshko <mpeshko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:24:36 by mpeshko           #+#    #+#             */
-/*   Updated: 2024/12/14 01:20:23 by mpeshko          ###   ########.fr       */
+/*   Updated: 2024/12/14 02:01:31 by mpeshko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /**
- * /**
  * The monitor is a separate thread that constantly (in a loop) checks whether 
  * any of the philosophers died and whether all philosophers have eaten 
  * enough times (an optional program argument).
